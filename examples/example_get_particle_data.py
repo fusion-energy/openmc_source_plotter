@@ -1,4 +1,3 @@
-
 import openmc_source_plotter as osp
 import openmc
 
@@ -18,7 +17,7 @@ my_source.energy = openmc.stats.Discrete([14e6], [1])
 initial_source_filename = osp.create_initial_particles(
     source=my_source,
     number_of_particles=10,
-    openmc_exec='/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc'
+    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
 )
 
 # gets the particle corrdiantes, energy and direction
