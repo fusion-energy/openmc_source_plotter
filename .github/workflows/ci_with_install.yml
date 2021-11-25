@@ -1,0 +1,47 @@
+
+# TODO this needs completing, the docker image would currently need a couple of
+# versions of openmc as the current 0.13-dev doesn't create an initial_source.h5
+# while the older versions don't write the required xml tag.
+# <write_initial_source>true</write_initial_source>
+# note to self come back to this once the current version of openmc writes out
+# the initial_source.h5
+
+
+
+# # This CI will launch a Docker image that contains all the dependencies required
+# # within that image the pytest test suite is run 
+
+# name: CI with install
+
+# on:
+#   pull_request:
+#     branches:
+#       - develop
+#       - main
+#     paths-ignore:
+#       - 'docs/**'
+#       - '.gitignore'
+#       - '*.md'
+#       - 'CITATION.cff'
+#       - 'LICENSE.txt'
+#       - 'readthedocs.yml'
+
+# jobs:
+#   testing:
+#     runs-on: ubuntu-latest
+#     container:
+#       image: ghcr.io/fusion-energy/paramak:dependencies
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: install package
+#         run: |
+#           python setup.py install
+
+#       - name: Run test_utils
+#         run: |
+#           pytest tests/test_utils.py -v --cov=openmc_source_plotter --cov-append --cov-report term --cov-report xml
+
+#       - name: Upload to codecov
+#         uses: codecov/codecov-action@v2
