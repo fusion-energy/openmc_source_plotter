@@ -10,10 +10,8 @@ import plotly.graph_objects as go
 
 
 def create_initial_particles(
-    source: openmc.source,
-    number_of_particles: int=2000,
-    openmc_exec='openmc'
-)-> str:
+    source: openmc.source, number_of_particles: int = 2000, openmc_exec="openmc"
+) -> str:
     """Accepts an openmc source and creates an initial_source.h5 file that can
     be used to find propties of the source particles such as initial x,y,z
     coordinates, direction and energy.
@@ -31,7 +29,7 @@ def create_initial_particles(
         number_of_particles: the number of particles to sample
         openmc_exec: the path of openmc executable or executable name if it
             appears in your system $PATH. Defaults to 'openmc' which will use
-            the default openmc in your system $PATH environmental variable.  
+            the default openmc in your system $PATH environmental variable.
     Returns:
         The filename of the initial source file created (initial_source.h5)
     """
@@ -47,7 +45,7 @@ def create_initial_particles(
 
     # Instantiate a Settings object
     settings = openmc.Settings()
-    settings.run_mode = ("fixed source")
+    settings.run_mode = "fixed source"
     settings.particles = number_of_particles
     settings.batches = 1
     settings.inactive = 0
@@ -62,9 +60,8 @@ def create_initial_particles(
 
     return "initial_source.h5"
 
-def get_particle_data(
-    input_filename: str
-):
+
+def get_particle_data(input_filename: str):
 
     f = h5py.File(input_filename, "r")
     dset = f["source_bank"]
@@ -83,28 +80,29 @@ def get_particle_data(
         z_values.append(particle[0][2])
         x_dir.append(particle[1][0])
         y_dir.append(particle[1][1])
-        z_dir.append(particle[1][2])  
+        z_dir.append(particle[1][2])
         e_values.append(particle[2])
-    
+
     return {
-        'x_values': x_values,
-        'y_values': y_values,
-        'z_values': z_values,
-        'x_dir': x_dir,
-        'y_dir': y_dir,
-        'z_dir': z_dir,
-        'e_values': e_values
+        "x_values": x_values,
+        "y_values": y_values,
+        "z_values": z_values,
+        "x_dir": x_dir,
+        "y_dir": y_dir,
+        "z_dir": z_dir,
+        "e_values": e_values,
     }
 
+
 def plot_energy_from_initial_source(
-    energy_bins: np.array=np.linspace(0, 20e6, 50),
-    input_filename: str = "initial_source.h5"
+    energy_bins: np.array = np.linspace(0, 20e6, 50),
+    input_filename: str = "initial_source.h5",
 ):
     """makes a plot of the energy distribution of the source"""
 
     data = get_particle_data(input_filename)
 
-    e_values = data['e_values']
+    e_values = data["e_values"]
 
     # Calculate pdf for source energies
     probability, bin_edges = np.histogram(e_values, energy_bins, density=True)
@@ -135,21 +133,21 @@ def plot_position_from_initial_source(input_filename="initial_source.h5"):
 
     data = get_particle_data(input_filename)
 
-    text = ["Energy = " + str(i) + " eV" for i in data['e_values']]
+    text = ["Energy = " + str(i) + " eV" for i in data["e_values"]]
 
     fig = go.Figure()
 
     fig.add_trace(
         go.Scatter3d(
-            x=data['x_values'],
-            y=data['y_values'],
-            z=data['z_values'],
+            x=data["x_values"],
+            y=data["y_values"],
+            z=data["z_values"],
             hovertext=text,
             text=text,
             mode="markers",
             marker={
                 "size": 2,
-                "color": data['e_values'],
+                "color": data["e_values"],
             },
         )
     )
@@ -170,12 +168,12 @@ def plot_direction_from_initial_source(input_filename="initial_source.h5"):
         {
             "type": "cone",
             "cauto": False,
-            "x": data['x_values'],
-            "y": data['y_values'],
-            "z": data['z_values'],
-            "u": data['x_dir'],
-            "v": data['y_dir'],
-            "w": data['z_dir'],
+            "x": data["x_values"],
+            "y": data["y_values"],
+            "z": data["z_values"],
+            "u": data["x_dir"],
+            "v": data["y_dir"],
+            "w": data["z_dir"],
             "cmin": 0,
             "cmax": 1,
             "anchor": "tail",
