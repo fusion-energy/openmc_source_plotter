@@ -3,7 +3,7 @@ import openmc_source_plotter as osp
 import openmc
 import numpy as np
 
-# initialises a new source object
+# initializes a new source object
 my_source = openmc.Source()
 
 # sets the direction to isotropic
