@@ -18,8 +18,8 @@ my_source = TokamakSource(
     mode="H",
     shafranov_factor=0.44789,
     triangularity=0.270,
-    ion_temperature_beta=6
-  ).make_openmc_sources()
+    ion_temperature_beta=6,
+).make_openmc_sources()
 
 # makes an initial_source.h5 file with details of the particles
 initial_source_filename = osp.create_initial_particles(
