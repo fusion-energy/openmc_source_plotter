@@ -12,7 +12,7 @@ my_source.angle = openmc.stats.Isotropic()
 initial_source_filename = osp.create_initial_particles(
     source=my_source,
     number_of_particles=100,
-    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
+    openmc_exec="/home/jshimwell/miniconda3/envs/openmc_0_11_0/bin/openmc",
 )
 
 # plots the particle energy distribution
