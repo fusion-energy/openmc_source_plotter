@@ -1,6 +1,5 @@
 import openmc_source_plotter as osp
 import openmc
-import numpy as np
 
 # initializes a new source object
 my_source = openmc.Source()

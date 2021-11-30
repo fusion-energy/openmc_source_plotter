@@ -5,9 +5,6 @@ import numpy as np
 # initialises a new source object
 my_source = openmc.Source()
 
-# sets the location of the source to x=0 y=0 z=0
-my_source.space = openmc.stats.Point((0, 0, 0))
-
 # sets the energy distribution to a Muir distribution neutrons
 my_source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0)
 
