@@ -22,10 +22,9 @@ class TestReactor(unittest.TestCase):
         self.initial_source_filename = osp.create_initial_particles(
             source=my_source,
             number_of_particles=10,
-            openmc_exec='/opt/openmc/build/bin/openmc'
+            openmc_exec="/opt/openmc/build/bin/openmc"
             # openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
         )
-
 
     def test_keys(self):
 
@@ -36,7 +35,7 @@ class TestReactor(unittest.TestCase):
             "x_dir",
             "y_dir",
             "z_dir",
-            "e_values"
+            "e_values",
         ]
 
         data = osp.get_particle_data(self.initial_source_filename)
