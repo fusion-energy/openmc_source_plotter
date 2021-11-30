@@ -127,7 +127,10 @@ def plot_energy_from_initial_source(
 
     return fig
 
-def plot_projected_position_from_initial_source(input_filename="initial_source.h5", axis='XY'):
+
+def plot_projected_position_from_initial_source(
+    input_filename="initial_source.h5", axis="XY"
+):
     """makes a plot of the initial creation locations of the particle source"""
 
     data = get_particle_data(input_filename)
@@ -136,17 +139,17 @@ def plot_projected_position_from_initial_source(input_filename="initial_source.h
 
     fig = go.Figure()
 
-    if axis == 'XY':
+    if axis == "XY":
         x = data["x_values"]
         y = data["y_values"]
-    if axis == 'XZ':
+    if axis == "XZ":
         x = data["x_values"]
         y = data["z_values"]
 
     fig.add_trace(
         go.Scatter(
             x=x,
-            y=y
+            y=y,
             hovertext=text,
             text=text,
             mode="markers",
@@ -160,6 +163,7 @@ def plot_projected_position_from_initial_source(input_filename="initial_source.h
     fig.update_layout(title="Particle production coordinates - coloured by energy")
 
     return fig
+
 
 def plot_position_from_initial_source(input_filename="initial_source.h5"):
     """makes a plot of the initial creation locations of the particle source"""

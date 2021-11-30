@@ -28,6 +28,8 @@ initial_source_filename = osp.create_initial_particles(
 )
 
 # plots the particle energy distribution
-plot = osp.plot_position_projected_from_initial_source(input_filename=initial_source_filename, axis='XY')
+plot = osp.plot_position_projected_from_initial_source(
+    input_filename=initial_source_filename, axis="XY"
+)
 
 plot.show()
