@@ -31,7 +31,7 @@ class TestUtils(unittest.TestCase):
         self.initial_source_filename = osp.create_initial_particles(
             source=my_source,
             number_of_particles=10,
-            openmc_exec=self.openmc_exec_dict['ci']
+            openmc_exec=self.openmc_exec_dict["ci"],
         )
 
     def test_keys(self):
@@ -52,12 +52,12 @@ class TestUtils(unittest.TestCase):
 
     def test_initial_source_output_file(self):
         initial_source_filename = osp.create_initial_particles(
-                    source=self.my_source,
-                    number_of_particles=10,
-                    output_source_filename='new_initial_source.h5',
-                    openmc_exec=self.openmc_exec_dict['ci']
-                )
+            source=self.my_source,
+            number_of_particles=10,
+            output_source_filename="new_initial_source.h5",
+            openmc_exec=self.openmc_exec_dict["ci"],
+        )
 
-        assert initial_source_filename == 'new_initial_source.h5'
-        assert Path('new_initial_source.h5').exists()
-        assert Path('initial_source.h5').exists() is False
+        assert initial_source_filename == "new_initial_source.h5"
+        assert Path("new_initial_source.h5").exists()
+        assert Path("initial_source.h5").exists() is False

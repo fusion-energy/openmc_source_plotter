@@ -45,7 +45,7 @@ def create_initial_particles(
     source: openmc.source,
     number_of_particles: int = 2000,
     openmc_exec="openmc",
-    output_source_filename="initial_source.h5"
+    output_source_filename="initial_source.h5",
 ) -> str:
     """Accepts an openmc source and creates an initial_source.h5 file that can
     be used to find propties of the source particles such as initial x,y,z
