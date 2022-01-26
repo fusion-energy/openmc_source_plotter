@@ -1,6 +1,6 @@
+
 import openmc_source_plotter as osp
 from openmc_plasma_source import TokamakSource
-import openmc
 
 my_source = TokamakSource(
     elongation=1.557,
@@ -21,14 +21,12 @@ my_source = TokamakSource(
     ion_temperature_beta=6,
 ).make_openmc_sources()
 
-# makes an initial_source.h5 file with details of the particles
-initial_source_filename = osp.create_initial_particles(
+
+# plots the particle energy distribution
+plot = osp.plot_source_position(
     source=my_source,
     number_of_particles=10,
     openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
 )
-
-# plots the particle energy distribution
-plot = osp.plot_position_from_initial_source(input_filename=initial_source_filename)
 
 plot.show()

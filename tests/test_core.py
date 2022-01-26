@@ -1,8 +1,10 @@
+from numpy import isin
 import openmc_source_plotter as osp
 import openmc
 import unittest
 from pathlib import Path
-
+import numpy as np
+import plotly.graph_objects as go
 
 class TestUtils(unittest.TestCase):
     def setUp(self):
@@ -35,30 +37,28 @@ class TestUtils(unittest.TestCase):
             openmc_exec=self.openmc_exec_dict[self.current_computer],
         )
 
-    def test_keys(self):
+    def test_energy_plot(self):
 
-        key_values = [
-            "x_values",
-            "y_values",
-            "z_values",
-            "x_dir",
-            "y_dir",
-            "z_dir",
-            "e_values",
-        ]
-
-        data = osp.get_particle_data(self.initial_source_filename)
-        for key in key_values:
-            assert key in data.keys()
-
-    def test_initial_source_output_file(self):
-        initial_source_filename = osp.create_initial_particles(
+        plot = osp.plot_source_energy(
             source=self.my_source,
-            number_of_particles=10,
-            output_source_filename="new_initial_source.h5",
+            number_of_particles=10000,
+            energy_bins=np.linspace(0, 20e6, 100),
             openmc_exec=self.openmc_exec_dict[self.current_computer],
         )
+        assert isinstance(plot, go.Figure)
 
-        assert initial_source_filename == "new_initial_source.h5"
-        assert Path("new_initial_source.h5").exists()
-        assert Path("initial_source.h5").exists() is False
+    def test_position_plot(self):
+
+        plot = osp.plot_source_position(
+            source = self.my_source,
+            openmc_exec=self.openmc_exec_dict[self.current_computer]
+        )
+        assert isinstance(plot, go.Figure)
+
+    def test_direction_plot(self):
+        plot = osp.plot_source_direction(
+            source=self.my_source,
+            number_of_particles=100,
+            openmc_exec=self.openmc_exec_dict['laptop'],
+        )
+        assert isinstance(plot, go.Figure)

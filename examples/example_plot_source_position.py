@@ -1,6 +1,6 @@
+
 import openmc_source_plotter as osp
 import openmc
-import numpy as np
 
 # initialises a new source object
 my_source = openmc.Source()
@@ -19,15 +19,10 @@ my_source.space = openmc.stats.CylindricalIndependent(
     r=radius, phi=angle, z=z_values, origin=(0.0, 0.0, 0.0)
 )
 
-
-# makes an initial_source.h5 file with details of the particles
-initial_source_filename = osp.create_initial_particles(
-    source=my_source,
-    number_of_particles=10,
-    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
-)
-
 # plots the particle energy distribution
-plot = osp.plot_position_from_initial_source(input_filename=initial_source_filename)
+plot = osp.plot_source_position(
+    source = my_source,
+    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc"
+)
 
 plot.show()

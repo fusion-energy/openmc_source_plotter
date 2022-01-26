@@ -7,6 +7,15 @@ A Python package for plotting the locations, directions or energy distributions 
 pip install openmc_source_plotter
 ```
 
+temporary fix
+For fixed source sources it is currently necessary to use openmc version 0.11
+and also to point the ```openmc_exec``` path to the openmc executable
+This can be installed with:
+```bash
+conda install -c conda-forge openmc=0.11
+```
+
+
 # Features
 
 The package provides functions to:
@@ -33,15 +42,12 @@ my_source = openmc.Source()
 # sets the energy distribution to a Muir distribution neutrons for DT fusion neutrons
 my_source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0)
 
-# makes an initial_source.h5 file with details of the particles
-osp.create_initial_particles(
-    source=my_source,
-    number_of_particles=10000,
-)
-
 # plots the particle energy distribution
-plot = osp.plot_energy_from_initial_source(
-    energy_bins=np.linspace(0, 20e6, 100)
+plot = osp.plot_source_energy(
+    source=my_source,
+    number_of_particles=2000,
+    energy_bins=np.linspace(0, 20e6, 100),
+    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
 )
 
 plot.show()
@@ -59,14 +65,12 @@ my_source = openmc.Source()
 # sets the direction to isotropic
 my_source.angle = openmc.stats.Isotropic()
 
-# makes an initial_source.h5 file with details of the particles
-initial_source_filename = osp.create_initial_particles(
+# plots the particle energy distribution
+plot = osp.plot_source_direction(
     source=my_source,
     number_of_particles=100,
+    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
 )
-
-# plots the particle energy distribution
-plot = osp.plot_direction_from_initial_source(input_filename=initial_source_filename)
 
 plot.show()
 ```
