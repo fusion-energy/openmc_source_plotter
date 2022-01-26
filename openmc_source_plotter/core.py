@@ -2,11 +2,50 @@
 
 """Provides functions for plotting source information"""
 
+from typing import List
 
 import numpy as np
 import plotly.graph_objects as go
 
 from .utils import get_particle_data
+
+
+def plot_energy_from_initial_sources(
+    energy_bins: np.array = np.linspace(0, 20e6, 50),
+    input_filenames: List[str] = ["initial_source.h5"],
+):
+    """makes a plot of the energy distribution of multiple sources"""
+
+    fig = go.Figure()
+
+    for input_filename in input_filenames:
+        print('getting particle data', input_filename)
+        data = get_particle_data(input_filename)
+
+        e_values = data["e_values"]
+
+        # Calculate pdf for source energies
+        probability, bin_edges = np.histogram(e_values, energy_bins, density=True)
+
+        # Plot source energy histogram
+        fig.add_trace(
+            go.Scatter(
+                x=energy_bins[:-1],
+                y=probability * np.diff(energy_bins),
+                line={"shape": "hv"},
+                hoverinfo="text",
+                name=input_filename,
+            )
+        )
+
+    fig.update_layout(
+        title="Particle energy",
+        xaxis={"title": "Energy (eV)"},
+        yaxis={"title": "Probability"},
+        showlegend=True,
+    )
+
+    return fig
 
 
 def plot_energy_from_initial_source(
