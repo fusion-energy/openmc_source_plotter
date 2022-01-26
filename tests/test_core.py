@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 import plotly.graph_objects as go
 
+
 class TestUtils(unittest.TestCase):
     def setUp(self):
 
@@ -50,8 +51,8 @@ class TestUtils(unittest.TestCase):
     def test_position_plot(self):
 
         plot = osp.plot_source_position(
-            source = self.my_source,
-            openmc_exec=self.openmc_exec_dict[self.current_computer]
+            source=self.my_source,
+            openmc_exec=self.openmc_exec_dict[self.current_computer],
         )
         assert isinstance(plot, go.Figure)
 
@@ -59,6 +60,6 @@ class TestUtils(unittest.TestCase):
         plot = osp.plot_source_direction(
             source=self.my_source,
             number_of_particles=100,
-            openmc_exec=self.openmc_exec_dict['laptop'],
+            openmc_exec=self.openmc_exec_dict["laptop"],
         )
         assert isinstance(plot, go.Figure)

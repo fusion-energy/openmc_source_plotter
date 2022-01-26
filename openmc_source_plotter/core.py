@@ -19,7 +19,7 @@ def plot_source_energy(
     energy_bins: np.array = np.linspace(0, 20e6, 50),
 ):
     """makes a plot of the energy distribution OpenMC source(s)
-    
+
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
         number_of_particles: The number of source samples to obtain, more will
@@ -36,10 +36,10 @@ def plot_source_energy(
     for single_source in source:
         tmp_filename = tempfile.mkstemp(suffix=".h5", prefix=f"openmc_source_")[1]
         create_initial_particles(
-            source= single_source,
+            source=single_source,
             number_of_particles=number_of_particles,
             openmc_exec=openmc_exec,
-            output_source_filename=tmp_filename
+            output_source_filename=tmp_filename,
         )
 
         print("getting particle data", tmp_filename)
@@ -77,7 +77,7 @@ def plot_source_position(
     openmc_exec="openmc",
 ):
     """makes a plot of the initial creation postions of an OpenMC source(s)
-    
+
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
         number_of_particles: The number of source samples to obtain.
@@ -92,10 +92,10 @@ def plot_source_position(
     for single_source in source:
         tmp_filename = tempfile.mkstemp(suffix=".h5", prefix=f"openmc_source_")[1]
         create_initial_particles(
-            source= single_source,
+            source=single_source,
             number_of_particles=number_of_particles,
             openmc_exec=openmc_exec,
-            output_source_filename=tmp_filename
+            output_source_filename=tmp_filename,
         )
 
         data = get_particle_data(tmp_filename)
@@ -128,7 +128,7 @@ def plot_source_direction(
     openmc_exec="openmc",
 ):
     """makes a plot of the initial creation directions of the particle source
-    
+
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
         number_of_particles: The number of source samples to obtain.
@@ -142,10 +142,10 @@ def plot_source_direction(
     for single_source in source:
         tmp_filename = tempfile.mkstemp(suffix=".h5", prefix=f"openmc_source_")[1]
         create_initial_particles(
-            source= single_source,
+            source=single_source,
             number_of_particles=number_of_particles,
             openmc_exec=openmc_exec,
-            output_source_filename=tmp_filename
+            output_source_filename=tmp_filename,
         )
         data = get_particle_data(tmp_filename)
 

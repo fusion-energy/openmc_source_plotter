@@ -1,4 +1,3 @@
-
 import openmc_source_plotter as osp
 from openmc_plasma_source import TokamakSource
 
