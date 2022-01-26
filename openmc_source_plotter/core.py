@@ -19,7 +19,7 @@ def plot_energy_from_initial_sources(
     fig = go.Figure()
 
     for input_filename in input_filenames:
-        print('getting particle data', input_filename)
+        print("getting particle data", input_filename)
         data = get_particle_data(input_filename)
 
         e_values = data["e_values"]
