@@ -71,7 +71,7 @@ def plot_source_energy(
         showlegend=True,
     )
 
-    plotting_package = 'plotly'  # not matplotlib option for now
+    plotting_package = "plotly"  # not matplotlib option for now
     save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
 
     return figure
@@ -126,7 +126,7 @@ def plot_source_position(
 
     figure.update_layout(title="Particle production coordinates - coloured by energy")
 
-    plotting_package = 'plotly'  # not matplotlib option for now
+    plotting_package = "plotly"  # not matplotlib option for now
     save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
 
     return figure
@@ -183,7 +183,7 @@ def plot_source_direction(
 
     figure.update_layout(title="Particle initial directions")
 
-    plotting_package = 'plotly'  # not matplotlib option for now
+    plotting_package = "plotly"  # not matplotlib option for now
     save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
 
     return figure
