@@ -9,7 +9,7 @@ import numpy as np
 import openmc
 import plotly.graph_objects as go
 
-from .utils import create_initial_particles, get_particle_data
+from .utils import create_initial_particles, get_particle_data, save_plot
 
 
 def plot_source_energy(
@@ -17,6 +17,7 @@ def plot_source_energy(
     number_of_particles: int = 2000,
     openmc_exec="openmc",
     energy_bins: np.array = np.linspace(0, 20e6, 50),
+    filename: str = None,
 ):
     """makes a plot of the energy distribution OpenMC source(s)
 
@@ -26,9 +27,11 @@ def plot_source_energy(
             take longer but produce a smoother plot.
         energy_bins: A numpy array of energy bins to use as energy bins.
         openmc_exec: The path of the openmc executable to use
+        filename: the filename to save the plot as should end with the correct
+            extention supported by matplotlib (e.g .png) or plotly (e.g .html)
     """
 
-    fig = go.Figure()
+    figure = go.Figure()
 
     if isinstance(source, openmc.Source):
         source = [source]
@@ -51,7 +54,7 @@ def plot_source_energy(
         probability, bin_edges = np.histogram(e_values, energy_bins, density=True)
 
         # Plot source energy histogram
-        fig.add_trace(
+        figure.add_trace(
             go.Scatter(
                 x=energy_bins[:-1],
                 y=probability * np.diff(energy_bins),
@@ -61,20 +64,24 @@ def plot_source_energy(
             )
         )
 
-    fig.update_layout(
+    figure.update_layout(
         title="Particle energy",
         xaxis={"title": "Energy (eV)"},
         yaxis={"title": "Probability"},
         showlegend=True,
     )
 
-    return fig
+    plotting_package = 'plotly'  # not matplotlib option for now
+    save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
+
+    return figure
 
 
 def plot_source_position(
     source: Union[openmc.Source, List[openmc.Source]],
     number_of_particles: int = 2000,
     openmc_exec="openmc",
+    filename: str = None,
 ):
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
@@ -84,7 +91,7 @@ def plot_source_position(
         openmc_exec: The path of the openmc executable to use
     """
 
-    fig = go.Figure()
+    figure = go.Figure()
 
     if isinstance(source, openmc.Source):
         source = [source]
@@ -102,7 +109,7 @@ def plot_source_position(
 
         text = ["Energy = " + str(i) + " eV" for i in data["e_values"]]
 
-        fig.add_trace(
+        figure.add_trace(
             go.Scatter3d(
                 x=data["x_values"],
                 y=data["y_values"],
@@ -117,15 +124,19 @@ def plot_source_position(
             )
         )
 
-    fig.update_layout(title="Particle production coordinates - coloured by energy")
+    figure.update_layout(title="Particle production coordinates - coloured by energy")
 
-    return fig
+    plotting_package = 'plotly'  # not matplotlib option for now
+    save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
+
+    return figure
 
 
 def plot_source_direction(
     source: Union[openmc.Source, List[openmc.Source]],
     number_of_particles: int = 2000,
     openmc_exec="openmc",
+    filename: str = None,
 ):
     """makes a plot of the initial creation directions of the particle source
 
@@ -134,7 +145,7 @@ def plot_source_direction(
         number_of_particles: The number of source samples to obtain.
         openmc_exec: The path of the openmc executable to use
     """
-    fig = go.Figure()
+    figure = go.Figure()
 
     if isinstance(source, openmc.Source):
         source = [source]
@@ -149,7 +160,7 @@ def plot_source_direction(
         )
         data = get_particle_data(tmp_filename)
 
-        fig.add_trace(
+        figure.add_trace(
             {
                 "type": "cone",
                 "cauto": False,
@@ -170,6 +181,9 @@ def plot_source_direction(
             }
         )
 
-    fig.update_layout(title="Particle initial directions")
+    figure.update_layout(title="Particle initial directions")
 
-    return fig
+    plotting_package = 'plotly'  # not matplotlib option for now
+    save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
+
+    return figure

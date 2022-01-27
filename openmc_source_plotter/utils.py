@@ -100,3 +100,15 @@ def create_initial_particles(
         shutil.move("initial_source.h5", output_source_filename)
 
     return output_source_filename
+
+
+def save_plot(plotting_package: str, filename: str, figure):
+    """Saves the matplotlib or plotly graph object as a file."""
+    if filename:
+        if plotting_package == "matplotlib":
+            figure.savefig(filename, bbox_inches="tight", dpi=400)
+        elif plotting_package == "plotly":
+            if Path(filename).suffix == ".html":
+                figure.write_html(filename)
+            else:
+                figure.write_image(filename)
