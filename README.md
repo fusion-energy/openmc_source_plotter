@@ -20,9 +20,9 @@ conda install -c conda-forge openmc=0.11
 
 The package provides functions to:
 
-- create the initial_source.h5 for a give openmc.source
+- create the initial_source.h5 for a given openmc.source
 - extract the locations, directions and energy of particles
-- provides convenient plotting functions for
+- visualise an openmc.source with respect to:
     - direction
     - energy
     - location
