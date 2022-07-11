@@ -13,7 +13,6 @@ plot = osp.plot_source_energy(
     source=my_source,
     number_of_particles=10000,
     energy_bins=np.linspace(0, 20e6, 100),
-    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
 )
 
 plot.show()

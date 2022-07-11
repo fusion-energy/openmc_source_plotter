@@ -15,8 +15,7 @@ from .utils import create_initial_particles, get_particle_data, save_plot
 def plot_source_energy(
     source: Union[openmc.Source, List[openmc.Source]],
     number_of_particles: int = 2000,
-    openmc_exec="openmc",
-    energy_bins: np.array = np.linspace(0, 20e6, 50),
+    energy_bins: Union[np.array, str] = "auto",
     filename: str = None,
 ):
     """makes a plot of the energy distribution OpenMC source(s)
@@ -25,10 +24,10 @@ def plot_source_energy(
         source: The openmc.Source object or list of openmc.Source objects to plot.
         number_of_particles: The number of source samples to obtain, more will
             take longer but produce a smoother plot.
-        energy_bins: A numpy array of energy bins to use as energy bins.
-        openmc_exec: The path of the openmc executable to use
+        energy_bins: A numpy array of energy bins to use as energy bins. 'Auto'
+            is also accepted and this picks the bins for you using numpy
         filename: the filename to save the plot as should end with the correct
-            extention supported by matplotlib (e.g .png) or plotly (e.g .html)
+            extension supported by matplotlib (e.g .png) or plotly (e.g .html)
     """
 
     figure = go.Figure()
@@ -37,21 +36,11 @@ def plot_source_energy(
         source = [source]
 
     for single_source in source:
-        tmp_filename = tempfile.mkstemp(suffix=".h5", prefix=f"openmc_source_")[1]
-        create_initial_particles(
-            source=single_source,
-            number_of_particles=number_of_particles,
-            openmc_exec=openmc_exec,
-            output_source_filename=tmp_filename,
-        )
 
-        print("getting particle data", tmp_filename)
-        data = get_particle_data(tmp_filename)
-
-        e_values = data["e_values"]
+        e_values = single_source.energy.sample(n_samples=number_of_particles)
 
         # Calculate pdf for source energies
-        probability, bin_edges = np.histogram(e_values, energy_bins, density=True)
+        probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
 
         # Plot source energy histogram
         figure.add_trace(
@@ -60,7 +49,6 @@ def plot_source_energy(
                 y=probability * np.diff(energy_bins),
                 line={"shape": "hv"},
                 hoverinfo="text",
-                name=tmp_filename,
             )
         )
 

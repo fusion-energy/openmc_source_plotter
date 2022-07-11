@@ -44,7 +44,6 @@ class TestUtils(unittest.TestCase):
             source=self.my_source,
             number_of_particles=10000,
             energy_bins=np.linspace(0, 20e6, 100),
-            openmc_exec=self.openmc_exec_dict[self.current_computer],
         )
         assert isinstance(plot, go.Figure)
 
