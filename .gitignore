@@ -131,3 +131,6 @@ dmypy.json
 # openmc files
 *.h5
 *.xml
+
+# version file
+_version.py
