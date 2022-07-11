@@ -15,7 +15,7 @@ from .utils import create_initial_particles, get_particle_data, save_plot
 def plot_source_energy(
     source: Union[openmc.Source, List[openmc.Source]],
     number_of_particles: int = 2000,
-    energy_bins: Union[np.array, str] = 'auto',
+    energy_bins: Union[np.array, str] = "auto",
     filename: str = None,
 ):
     """makes a plot of the energy distribution OpenMC source(s)
