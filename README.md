@@ -8,8 +8,10 @@ pip install openmc_source_plotter
 ```
 
 temporary fix
-For fixed source sources it is currently necessary to use openmc version 0.11
-and also to point the ```openmc_exec``` path to the openmc executable
+For position and direction plotting with fixed source sources it is currently
+necessary to use openmc version 0.11 and also to point the ```openmc_exec```
+path to the openmc executable.
+
 This can be installed with:
 ```bash
 conda install -c conda-forge openmc=0.11
@@ -47,7 +49,6 @@ plot = osp.plot_source_energy(
     source=my_source,
     number_of_particles=2000,
     energy_bins=np.linspace(0, 20e6, 100),
-    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
 )
 
 plot.show()
@@ -78,7 +79,6 @@ plot = osp.plot_source_energy(
     source=[my_dt_source, my_dd_source],
     number_of_particles=10000,
     energy_bins=np.linspace(0, 20e6, 100),
-    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
 )
 
 plot.show()
