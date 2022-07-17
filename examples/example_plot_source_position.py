@@ -19,8 +19,6 @@ my_source.space = openmc.stats.CylindricalIndependent(
 )
 
 # plots the particle energy distribution
-plot = osp.plot_source_position(
-    source=my_source, openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc"
-)
+plot = osp.plot_source_position(source=my_source)
 
 plot.show()

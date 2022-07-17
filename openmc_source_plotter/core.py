@@ -7,27 +7,48 @@ from typing import List, Union
 
 import numpy as np
 import openmc
+import openmc.lib
 import plotly.graph_objects as go
 
-from .utils import create_initial_particles, get_particle_data, save_plot
+
+def sample_initial_particles(source: openmc.source, n_samples=1000, prn_seed=None):
+
+    settings = openmc.Settings()
+    settings.particles = 1
+    settings.batches = 1
+    settings.export_to_xml()
+
+    materials = openmc.Materials()
+    materials.export_to_xml()
+
+    sph = openmc.Sphere(r=1, boundary_type="vacuum")
+    cell = openmc.Cell(region=-sph)
+    geometry = openmc.Geometry([cell])
+
+    geometry.export_to_xml()
+    # model.geometry = openmc.Geometry([cell])
+
+    # model = openmc.Model()
+
+    openmc.lib.init()
+    particles = openmc.lib.sample_external_source(
+        n_samples=n_samples, prn_seed=prn_seed
+    )
+    openmc.lib.finalize()
+    return particles
 
 
 def plot_source_energy(
     source: Union[openmc.Source, List[openmc.Source]],
-    number_of_particles: int = 2000,
-    energy_bins: Union[np.array, str] = "auto",
-    filename: str = None,
+    n_samples: int = 2000,
+    prn_seed: int = 1,
 ):
-    """makes a plot of the energy distribution OpenMC source(s)
+    """makes a plot of the initial creation postions of an OpenMC source(s)
 
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
-        number_of_particles: The number of source samples to obtain, more will
-            take longer but produce a smoother plot.
-        energy_bins: A numpy array of energy bins to use as energy bins. 'Auto'
-            is also accepted and this picks the bins for you using numpy
-        filename: the filename to save the plot as should end with the correct
-            extension supported by matplotlib (e.g .png) or plotly (e.g .html)
+        n_smaples: The number of source samples to obtain.
+        prn_seed: The pseudorandom number seed
     """
 
     figure = go.Figure()
@@ -37,16 +58,16 @@ def plot_source_energy(
 
     for single_source in source:
 
-        e_values = single_source.energy.sample(n_samples=number_of_particles)
+        e_values = single_source.energy.sample(n_samples=n_samples)
 
         # Calculate pdf for source energies
-        probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
+        probability, bin_edges = np.histogram(e_values, bins="auto", density=True)
 
         # Plot source energy histogram
         figure.add_trace(
             go.Scatter(
-                x=energy_bins[:-1],
-                y=probability * np.diff(energy_bins),
+                x=bin_edges[:-1],
+                y=probability * np.diff(bin_edges),
                 line={"shape": "hv"},
                 hoverinfo="text",
             )
@@ -59,24 +80,20 @@ def plot_source_energy(
         showlegend=True,
     )
 
-    plotting_package = "plotly"  # not matplotlib option for now
-    save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
-
     return figure
 
 
 def plot_source_position(
     source: Union[openmc.Source, List[openmc.Source]],
-    number_of_particles: int = 2000,
-    openmc_exec="openmc",
-    filename: str = None,
+    n_samples: int = 2000,
+    prn_seed: int = 1,
 ):
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
-        number_of_particles: The number of source samples to obtain.
-        openmc_exec: The path of the openmc executable to use
+        n_smaples: The number of source samples to obtain.
+        prn_seed: The pseudorandom number seed
     """
 
     figure = go.Figure()
@@ -85,53 +102,42 @@ def plot_source_position(
         source = [source]
 
     for single_source in source:
-        tmp_filename = tempfile.mkstemp(suffix=".h5", prefix=f"openmc_source_")[1]
-        create_initial_particles(
-            source=single_source,
-            number_of_particles=number_of_particles,
-            openmc_exec=openmc_exec,
-            output_source_filename=tmp_filename,
-        )
 
-        data = get_particle_data(tmp_filename)
+        data = sample_initial_particles(single_source, n_samples, prn_seed)
 
-        text = ["Energy = " + str(i) + " eV" for i in data["e_values"]]
+        text = ["Energy = " + str(particle.E) + " eV" for particle in data]
 
         figure.add_trace(
             go.Scatter3d(
-                x=data["x_values"],
-                y=data["y_values"],
-                z=data["z_values"],
+                x=[particle.r[0] for particle in data],
+                y=[particle.r[1] for particle in data],
+                z=[particle.r[2] for particle in data],
                 hovertext=text,
                 text=text,
                 mode="markers",
                 marker={
                     "size": 2,
-                    "color": data["e_values"],
+                    # "color": data.E,
                 },
             )
         )
 
     figure.update_layout(title="Particle production coordinates - coloured by energy")
 
-    plotting_package = "plotly"  # not matplotlib option for now
-    save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
-
     return figure
 
 
 def plot_source_direction(
     source: Union[openmc.Source, List[openmc.Source]],
-    number_of_particles: int = 2000,
-    openmc_exec="openmc",
-    filename: str = None,
+    n_samples: int = 2000,
+    prn_seed: int = 1,
 ):
-    """makes a plot of the initial creation directions of the particle source
+    """makes a plot of the initial creation postions of an OpenMC source(s)
 
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
-        number_of_particles: The number of source samples to obtain.
-        openmc_exec: The path of the openmc executable to use
+        n_smaples: The number of source samples to obtain.
+        prn_seed: The pseudorandom number seed
     """
     figure = go.Figure()
 
@@ -139,25 +145,18 @@ def plot_source_direction(
         source = [source]
 
     for single_source in source:
-        tmp_filename = tempfile.mkstemp(suffix=".h5", prefix=f"openmc_source_")[1]
-        create_initial_particles(
-            source=single_source,
-            number_of_particles=number_of_particles,
-            openmc_exec=openmc_exec,
-            output_source_filename=tmp_filename,
-        )
-        data = get_particle_data(tmp_filename)
+        data = sample_initial_particles(single_source, n_samples, prn_seed)
 
         figure.add_trace(
             {
                 "type": "cone",
                 "cauto": False,
-                "x": data["x_values"],
-                "y": data["y_values"],
-                "z": data["z_values"],
-                "u": data["x_dir"],
-                "v": data["y_dir"],
-                "w": data["z_dir"],
+                "x": [particle.r[0] for particle in data],
+                "y": [particle.r[1] for particle in data],
+                "z": [particle.r[2] for particle in data],
+                "u": [particle.u[0] for particle in data],
+                "v": [particle.u[1] for particle in data],
+                "w": [particle.u[2] for particle in data],
                 "cmin": 0,
                 "cmax": 1,
                 "anchor": "tail",
@@ -170,8 +169,5 @@ def plot_source_direction(
         )
 
     figure.update_layout(title="Particle initial directions")
-
-    plotting_package = "plotly"  # not matplotlib option for now
-    save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
 
     return figure
