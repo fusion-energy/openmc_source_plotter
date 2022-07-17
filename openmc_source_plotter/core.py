@@ -7,9 +7,38 @@ from typing import List, Union
 
 import numpy as np
 import openmc
+import openmc.lib
 import plotly.graph_objects as go
 
-from .utils import create_initial_particles, get_particle_data, save_plot
+
+
+def sample_initial_particles(
+    source: openmc.source,
+    n_samples=1000, prn_seed=None
+):
+    
+    settings = openmc.Settings()
+    settings.particles=1
+    settings.batches=1
+    settings.export_to_xml()
+    
+    materials = openmc.Materials()
+    materials.export_to_xml()
+    
+    sph = openmc.Sphere(r=1, boundary_type='vacuum')
+    cell = openmc.Cell(region=-sph)
+    geometry = openmc.Geometry([cell])
+    
+    geometry.export_to_xml()
+    # model.geometry = openmc.Geometry([cell])
+    
+    # model = openmc.Model()
+    
+    openmc.lib.init()
+    particles = openmc.lib.sample_external_source(n_samples=n_samples, prn_seed=prn_seed)
+    openmc.lib.finalize()
+    return particles
+    
 
 
 def plot_source_energy(
@@ -85,37 +114,27 @@ def plot_source_position(
         source = [source]
 
     for single_source in source:
-        tmp_filename = tempfile.mkstemp(suffix=".h5", prefix=f"openmc_source_")[1]
-        create_initial_particles(
-            source=single_source,
-            number_of_particles=number_of_particles,
-            openmc_exec=openmc_exec,
-            output_source_filename=tmp_filename,
-        )
 
-        data = get_particle_data(tmp_filename)
+        data = sample_initial_particles(single_source)
 
-        text = ["Energy = " + str(i) + " eV" for i in data["e_values"]]
+        text = ["Energy = " + str(particle.E) + " eV" for particle in data]
 
         figure.add_trace(
             go.Scatter3d(
-                x=data["x_values"],
-                y=data["y_values"],
-                z=data["z_values"],
+                x=[particle.r[0] for particle in data],
+                y=[particle.r[1] for particle in data],
+                z=[particle.r[2] for particle in data],
                 hovertext=text,
                 text=text,
                 mode="markers",
                 marker={
                     "size": 2,
-                    "color": data["e_values"],
+                    # "color": data.E,
                 },
             )
         )
 
     figure.update_layout(title="Particle production coordinates - coloured by energy")
-
-    plotting_package = "plotly"  # not matplotlib option for now
-    save_plot(plotting_package=plotting_package, filename=filename, figure=figure)
 
     return figure
 
