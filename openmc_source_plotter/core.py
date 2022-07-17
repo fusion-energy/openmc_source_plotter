@@ -16,19 +16,21 @@ def sample_initial_particles(source: openmc.source, n_samples=1000, prn_seed=Non
     settings = openmc.Settings()
     settings.particles = 1
     settings.batches = 1
+    settings.source = source
     settings.export_to_xml()
 
     materials = openmc.Materials()
     materials.export_to_xml()
 
-    sph = openmc.Sphere(r=1, boundary_type="vacuum")
+    sph = openmc.Sphere(r=9999999999, boundary_type="vacuum")
     cell = openmc.Cell(region=-sph)
     geometry = openmc.Geometry([cell])
 
     geometry.export_to_xml()
-    # model.geometry = openmc.Geometry([cell])
 
-    # model = openmc.Model()
+    # # model = openmc.Model()
+    # model.geometry = geometry
+    # model.materials = geometry
 
     openmc.lib.init()
     particles = openmc.lib.sample_external_source(
@@ -58,7 +60,7 @@ def plot_source_energy(
 
     for single_source in source:
 
-        e_values = single_source.energy.sample(n_samples=n_samples)
+        e_values = single_source.energy.sample(n_samples=n_samples, prn_seed=prn_seed)
 
         # Calculate pdf for source energies
         probability, bin_edges = np.histogram(e_values, bins="auto", density=True)
@@ -104,6 +106,7 @@ def plot_source_position(
     for single_source in source:
 
         data = sample_initial_particles(single_source, n_samples, prn_seed)
+        print([p.r for p in data])
 
         text = ["Energy = " + str(particle.E) + " eV" for particle in data]
 
