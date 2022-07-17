@@ -22,10 +22,6 @@ my_source = TokamakSource(
 
 
 # plots the particle energy distribution
-plot = osp.plot_source_position(
-    source=my_source,
-    number_of_particles=10,
-    openmc_exec="/home/jshim/miniconda3/envs/openmc_0_11_0/bin/openmc",
-)
+plot = osp.plot_source_position(source=my_source, n_samples=100)
 
 plot.show()

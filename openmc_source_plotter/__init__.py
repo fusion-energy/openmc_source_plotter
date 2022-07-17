@@ -16,3 +16,4 @@ __all__ = ["__version__"]
 from .core import plot_source_direction
 from .core import plot_source_energy
 from .core import plot_source_position
+from .core import sample_initial_particles
