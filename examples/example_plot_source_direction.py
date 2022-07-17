@@ -8,9 +8,6 @@ my_source = openmc.Source()
 my_source.angle = openmc.stats.Isotropic()
 
 # plots the particle energy distribution
-plot = osp.plot_source_direction(
-    source=my_source,
-    n_samples=200
-)
+plot = osp.plot_source_direction(source=my_source, n_samples=200)
 
 plot.show()

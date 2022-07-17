@@ -11,40 +11,37 @@ import openmc.lib
 import plotly.graph_objects as go
 
 
+def sample_initial_particles(source: openmc.source, n_samples=1000, prn_seed=None):
 
-def sample_initial_particles(
-    source: openmc.source,
-    n_samples=1000, prn_seed=None
-):
-    
     settings = openmc.Settings()
-    settings.particles=1
-    settings.batches=1
+    settings.particles = 1
+    settings.batches = 1
     settings.export_to_xml()
-    
+
     materials = openmc.Materials()
     materials.export_to_xml()
-    
-    sph = openmc.Sphere(r=1, boundary_type='vacuum')
+
+    sph = openmc.Sphere(r=1, boundary_type="vacuum")
     cell = openmc.Cell(region=-sph)
     geometry = openmc.Geometry([cell])
-    
+
     geometry.export_to_xml()
     # model.geometry = openmc.Geometry([cell])
-    
+
     # model = openmc.Model()
-    
+
     openmc.lib.init()
-    particles = openmc.lib.sample_external_source(n_samples=n_samples, prn_seed=prn_seed)
+    particles = openmc.lib.sample_external_source(
+        n_samples=n_samples, prn_seed=prn_seed
+    )
     openmc.lib.finalize()
     return particles
-    
 
 
 def plot_source_energy(
     source: Union[openmc.Source, List[openmc.Source]],
     n_samples: int = 2000,
-    prn_seed: int = 1
+    prn_seed: int = 1,
 ):
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
@@ -64,7 +61,7 @@ def plot_source_energy(
         e_values = single_source.energy.sample(n_samples=n_samples)
 
         # Calculate pdf for source energies
-        probability, bin_edges = np.histogram(e_values, bins='auto', density=True)
+        probability, bin_edges = np.histogram(e_values, bins="auto", density=True)
 
         # Plot source energy histogram
         figure.add_trace(
@@ -89,7 +86,7 @@ def plot_source_energy(
 def plot_source_position(
     source: Union[openmc.Source, List[openmc.Source]],
     n_samples: int = 2000,
-    prn_seed: int = 1
+    prn_seed: int = 1,
 ):
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
@@ -133,7 +130,7 @@ def plot_source_position(
 def plot_source_direction(
     source: Union[openmc.Source, List[openmc.Source]],
     n_samples: int = 2000,
-    prn_seed: int = 1
+    prn_seed: int = 1,
 ):
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
