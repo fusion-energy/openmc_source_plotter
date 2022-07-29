@@ -58,7 +58,9 @@ def plot_source_energy(
 
     for single_source in source:
 
-        e_values = single_source.energy.sample(n_samples=n_samples, prn_seed=prn_seed)
+        data = sample_initial_particles(single_source, n_samples, prn_seed)
+
+        e_values = [particle.E for particle in data]
 
         # Calculate pdf for source energies
         probability, bin_edges = np.histogram(e_values, bins="auto", density=True)
@@ -104,7 +106,6 @@ def plot_source_position(
     for single_source in source:
 
         data = sample_initial_particles(single_source, n_samples, prn_seed)
-        print([p.r for p in data])
 
         text = ["Energy = " + str(particle.E) + " eV" for particle in data]
 
