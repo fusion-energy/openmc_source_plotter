@@ -21,7 +21,7 @@ jobs:
   testing:
     runs-on: ubuntu-latest
     container:
-      image: docker pull openmc/openmc:develop
+      image: openmc/openmc:develop
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -47,4 +47,3 @@ jobs:
 
       - name: Upload to codecov
         uses: codecov/codecov-action@v2
-
