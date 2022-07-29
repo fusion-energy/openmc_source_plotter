@@ -67,9 +67,7 @@ def plot_source_energy(
         e_values = [particle.E for particle in data]
 
         # Calculate pdf for source energies
-        probability, bin_edges = np.histogram(
-            e_values, bins=energy_bins, density=True
-        )
+        probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
 
         # Plot source energy histogram
         figure.add_trace(
