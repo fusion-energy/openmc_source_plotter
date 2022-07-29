@@ -11,7 +11,9 @@ import openmc.lib
 import plotly.graph_objects as go
 
 
-def sample_initial_particles(source: openmc.source, n_samples=1000, prn_seed=None):
+def sample_initial_particles(
+    source: openmc.source, n_samples: int = 1000, prn_seed: int = None
+):
 
     settings = openmc.Settings()
     settings.particles = 1
@@ -28,10 +30,6 @@ def sample_initial_particles(source: openmc.source, n_samples=1000, prn_seed=Non
 
     geometry.export_to_xml()
 
-    # # model = openmc.Model()
-    # model.geometry = geometry
-    # model.materials = geometry
-
     openmc.lib.init()
     particles = openmc.lib.sample_external_source(
         n_samples=n_samples, prn_seed=prn_seed
@@ -44,13 +42,17 @@ def plot_source_energy(
     source: Union[openmc.Source, List[openmc.Source]],
     n_samples: int = 2000,
     prn_seed: int = 1,
+    energy_bins: Union[str, np.array] = "auto",
 ):
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
-        n_smaples: The number of source samples to obtain.
+        n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed
+        energy_bins: Defaults to 'auto' which uses inbuilt auto binning in Numpy
+            bins can also be manually set by passing in a numpy array of bin
+            edges.
     """
 
     figure = go.Figure()
@@ -60,10 +62,12 @@ def plot_source_energy(
 
     for single_source in source:
 
-        e_values = single_source.energy.sample(n_samples=n_samples, prn_seed=prn_seed)
+        data = sample_initial_particles(single_source, n_samples, prn_seed)
+
+        e_values = [particle.E for particle in data]
 
         # Calculate pdf for source energies
-        probability, bin_edges = np.histogram(e_values, bins="auto", density=True)
+        probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
 
         # Plot source energy histogram
         figure.add_trace(
@@ -94,7 +98,7 @@ def plot_source_position(
 
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
-        n_smaples: The number of source samples to obtain.
+        n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed
     """
 
@@ -106,7 +110,6 @@ def plot_source_position(
     for single_source in source:
 
         data = sample_initial_particles(single_source, n_samples, prn_seed)
-        print([p.r for p in data])
 
         text = ["Energy = " + str(particle.E) + " eV" for particle in data]
 
@@ -139,7 +142,7 @@ def plot_source_direction(
 
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
-        n_smaples: The number of source samples to obtain.
+        n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed
     """
     figure = go.Figure()

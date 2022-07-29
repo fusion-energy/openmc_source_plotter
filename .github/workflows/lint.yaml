@@ -1,0 +1,27 @@
+name: Python Flake8 Lint
+
+on:
+  # Trigger the workflow pull requests to any branch
+  pull_request:
+
+jobs:
+  run-linters:
+    name: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Python dependencies
+        run: pip install flake8
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          flake8: true
