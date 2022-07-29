@@ -42,7 +42,7 @@ def plot_source_energy(
     source: Union[openmc.Source, List[openmc.Source]],
     n_samples: int = 2000,
     prn_seed: int = 1,
-    energy_bins: Union[str, np.array] = 'auto'
+    energy_bins: Union[str, np.array] = "auto",
 ):
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
