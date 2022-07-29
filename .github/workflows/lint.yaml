@@ -1,4 +1,4 @@
-name: Lint
+name: Python Flake8 Lint
 
 on:
   # Trigger the workflow on push or pull request,
@@ -7,7 +7,7 @@ on:
 
 jobs:
   run-linters:
-    name: flake8 lint
+    name: lint
     runs-on: ubuntu-latest
 
     steps:
