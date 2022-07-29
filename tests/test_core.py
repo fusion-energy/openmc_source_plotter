@@ -1,8 +1,6 @@
-from numpy import isin
 import openmc_source_plotter as osp
 import openmc
 import unittest
-from pathlib import Path
 import numpy as np
 import plotly.graph_objects as go
 

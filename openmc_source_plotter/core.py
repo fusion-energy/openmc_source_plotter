@@ -2,7 +2,6 @@
 
 """Provides functions for plotting source information"""
 
-import tempfile
 from typing import List, Union
 
 import numpy as np
@@ -47,12 +46,13 @@ def plot_source_energy(
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
     Args:
-        source: The openmc.Source object or list of openmc.Source objects to plot.
+        source: The openmc.Source object or list of openmc.Source objects to
+            plot.
         n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed
-        energy_bins: Defaults to 'auto' which uses inbuilt auto binning in Numpy
-            bins can also be manually set by passing in a numpy array of bin
-            edges.
+        energy_bins: Defaults to 'auto' which uses inbuilt auto binning in
+            Numpy bins can also be manually set by passing in a numpy array of
+            bin edges.
     """
 
     figure = go.Figure()
@@ -67,7 +67,9 @@ def plot_source_energy(
         e_values = [particle.E for particle in data]
 
         # Calculate pdf for source energies
-        probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
+        probability, bin_edges = np.histogram(
+            e_values, bins=energy_bins, density=True
+        )
 
         # Plot source energy histogram
         figure.add_trace(
@@ -97,7 +99,8 @@ def plot_source_position(
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
     Args:
-        source: The openmc.Source object or list of openmc.Source objects to plot.
+        source: The openmc.Source object or list of openmc.Source objects to
+            plot.
         n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed
     """
@@ -127,8 +130,8 @@ def plot_source_position(
                 },
             )
         )
-
-    figure.update_layout(title="Particle production coordinates - coloured by energy")
+    title = "Particle production coordinates coloured by energy"
+    figure.update_layout(title=title)
 
     return figure
 
@@ -141,7 +144,8 @@ def plot_source_direction(
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
     Args:
-        source: The openmc.Source object or list of openmc.Source objects to plot.
+        source: The openmc.Source object or list of openmc.Source objects to
+            plot.
         n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed
     """
