@@ -1,23 +1,28 @@
 name: Lint
 
 on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
   pull_request:
 
 jobs:
-  flake8_py3:
+  run-linters:
+    name: flake8 lint
     runs-on: ubuntu-latest
+
     steps:
-      - name: Setup Python
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Install flake8
+          python-version: 3.10
+
+      - name: Install Python dependencies
         run: pip install flake8
-      - name: Run flake8
-        uses: julianwachholz/flake8-action@v2
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
         with:
-          checkName: 'flake8_py3'   # NOTE: this needs to be the same as the job name
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          flake8: true
