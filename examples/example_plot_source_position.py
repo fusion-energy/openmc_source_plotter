@@ -10,7 +10,8 @@ radius = openmc.stats.Discrete([10], [1])
 # the distribution of source z values is just a single value
 z_values = openmc.stats.Discrete([0], [1])
 
-# the distribution of source azimuthal angles values is a uniform distribution between 0 and 2 Pi
+# the distribution of source azimuthal angles
+# values is a uniform distribution between 0 and 2 Pi
 angle = openmc.stats.Uniform(a=0.0, b=2 * 3.14159265359)
 
 # this makes the ring source using the three distributions and a radius

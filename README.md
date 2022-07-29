@@ -1,3 +1,8 @@
+[![CI with install](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/ci_with_install.yml/badge.svg)](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/ci_with_install.yml)
+
+[![Python Flake8 Lint](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/lint.yaml/badge.svg)](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/lint.yaml)
+
+[![Upload Python Package](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/python-publish.yml/badge.svg)](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/python-publish.yml)
 
 A Python package for plotting the locations, directions or energy distributions of OpenMC sources.
 
