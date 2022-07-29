@@ -11,7 +11,7 @@ import openmc.lib
 import plotly.graph_objects as go
 
 
-def sample_initial_particles(source: openmc.source, n_samples=1000, prn_seed=None):
+def sample_initial_particles(source: openmc.source, n_samples: int=1000, prn_seed:int=None):
 
     settings = openmc.Settings()
     settings.particles = 1
@@ -27,10 +27,6 @@ def sample_initial_particles(source: openmc.source, n_samples=1000, prn_seed=Non
     geometry = openmc.Geometry([cell])
 
     geometry.export_to_xml()
-
-    # # model = openmc.Model()
-    # model.geometry = geometry
-    # model.materials = geometry
 
     openmc.lib.init()
     particles = openmc.lib.sample_external_source(
