@@ -42,13 +42,17 @@ def plot_source_energy(
     source: Union[openmc.Source, List[openmc.Source]],
     n_samples: int = 2000,
     prn_seed: int = 1,
+    energy_bins: Union[str, np.array] = 'auto'
 ):
     """makes a plot of the initial creation postions of an OpenMC source(s)
 
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
-        n_smaples: The number of source samples to obtain.
+        n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed
+        energy_bins: Defaults to 'auto' which uses inbuilt auto binning in Numpy
+            bins can also be manually set by passing in a numpy array of bin
+            edges.
     """
 
     figure = go.Figure()
@@ -63,7 +67,7 @@ def plot_source_energy(
         e_values = [particle.E for particle in data]
 
         # Calculate pdf for source energies
-        probability, bin_edges = np.histogram(e_values, bins="auto", density=True)
+        probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
 
         # Plot source energy histogram
         figure.add_trace(
@@ -94,7 +98,7 @@ def plot_source_position(
 
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
-        n_smaples: The number of source samples to obtain.
+        n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed
     """
 
@@ -138,7 +142,7 @@ def plot_source_direction(
 
     Args:
         source: The openmc.Source object or list of openmc.Source objects to plot.
-        n_smaples: The number of source samples to obtain.
+        n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed
     """
     figure = go.Figure()
