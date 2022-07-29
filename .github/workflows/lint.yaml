@@ -1,8 +1,7 @@
 name: Python Flake8 Lint
 
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
+  # Trigger the workflow pull requests to any branch
   pull_request:
 
 jobs:
