@@ -9,15 +9,13 @@ import openmc
 import openmc.lib
 import plotly.graph_objects as go
 
+
 class SettingsWithSourcePlotting(openmc.Settings):
     r"""Extends the openmc.Settings to add source plotting methods for energy
     direction and space.
     """
-    
 
-    def sample_initial_particles(
-        self, n_samples: int = 1000, prn_seed: int = None
-    ):
+    def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
 
         settings = openmc.Settings()
         settings.particles = 1
@@ -41,7 +39,6 @@ class SettingsWithSourcePlotting(openmc.Settings):
         openmc.lib.finalize()
 
         return particles
-
 
     def plot_source_energy(
         self,
@@ -89,7 +86,6 @@ class SettingsWithSourcePlotting(openmc.Settings):
 
         return figure
 
-
     def plot_source_position(
         source: Union[openmc.Source, List[openmc.Source]],
         n_samples: int = 2000,
@@ -133,7 +129,6 @@ class SettingsWithSourcePlotting(openmc.Settings):
         figure.update_layout(title=title)
 
         return figure
-
 
     def plot_source_direction(
         source: Union[openmc.Source, List[openmc.Source]],
