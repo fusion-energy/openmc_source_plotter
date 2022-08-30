@@ -1,8 +1,8 @@
-import openmc_source_plotter as osp
+from openmc_source_plotter import SourceWithPlotting
 import openmc
 
 # initialises a new source object
-my_source = openmc.Source()
+my_source = SourceWithPlotting()
 
 # the distribution of radius is just a single value
 radius = openmc.stats.Discrete([10], [1])
@@ -20,6 +20,6 @@ my_source.space = openmc.stats.CylindricalIndependent(
 )
 
 # plots the particle energy distribution
-plot = osp.plot_source_position(source=my_source)
+plot = my_source.plot_source_position()
 
 plot.show()

@@ -1,8 +1,8 @@
-import openmc_source_plotter as osp
 import openmc
+import openmc_source_plotter as osp
 
 # initialises a new source object
-my_source = openmc.Source()
+my_source = osp.SourceWithPlotting()
 
 # sets the location of the source to x=0 y=0 z=0
 my_source.space = openmc.stats.Point((0, 0, 0))
@@ -14,6 +14,6 @@ my_source.angle = openmc.stats.Isotropic()
 my_source.energy = openmc.stats.Discrete([14e6], [1])
 
 # gets the particle corrdiantes, energy and direction
-data = osp.sample_initial_particles(my_source)
+data = my_source.sample_initial_particles()
 
 print(data)

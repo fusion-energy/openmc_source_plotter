@@ -1,0 +1,10 @@
+# build with
+# conda env create -f environment.yml
+
+name: openmc_source_plotter_environment
+
+channels:
+  - conda-forge
+
+dependencies:
+  - openmc "openmc=0.13.1=dagmc*nompi*"
