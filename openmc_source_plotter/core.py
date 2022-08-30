@@ -189,4 +189,5 @@ class Source(openmc.Source):
 
         return figure
 
-openmc.Source = Source 
+
+openmc.Source = Source

@@ -1,5 +1,5 @@
 import openmc
-import openmc_source_plotter  # overwrites the openmc.source method 
+import openmc_source_plotter  # overwrites the openmc.source method
 
 # initialises a new source object
 my_dt_source = openmc.Source()
