@@ -17,11 +17,7 @@ class SourceWithPlotting(openmc.Source):
     plot_source_position(), plot_source_direction(), sample_initial_particles()
     """
 
-    def sample_initial_particles(
-        self,
-        n_samples: int = 1000,
-        prn_seed: int = None
-    ):
+    def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
 
         settings = openmc.Settings()
         settings.particles = 1
@@ -83,11 +79,7 @@ class SourceWithPlotting(openmc.Source):
         e_values = [particle.E for particle in data]
 
         # Calculate pdf for source energies
-        probability, bin_edges = np.histogram(
-            e_values,
-            bins=energy_bins,
-            density=True
-        )
+        probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
 
         # Plot source energy histogram
         figure.add_trace(
