@@ -13,4 +13,4 @@ except PackageNotFoundError:
 
 __all__ = ["__version__"]
 
-from .core import SettingsWithSourcePlotting
+from .core import SourceWithPlotting

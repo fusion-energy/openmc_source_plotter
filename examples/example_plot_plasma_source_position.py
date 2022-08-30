@@ -1,5 +1,8 @@
-import openmc_source_plotter as osp
+
 from openmc_plasma_source import TokamakSource
+# openmc_plasma_source makes use of this package and 
+# TokamakSource is a SourceWithPlotting object so it has
+# access to the plotting methods
 
 my_source = TokamakSource(
     elongation=1.557,
@@ -22,6 +25,6 @@ my_source = TokamakSource(
 
 
 # plots the particle energy distribution
-plot = osp.plot_source_position(source=my_source, n_samples=100)
+plot = my_source.plot_source_position()
 
 plot.show()
