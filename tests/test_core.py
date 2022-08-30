@@ -1,5 +1,5 @@
 import openmc
-import openmc_source_plotter 
+import openmc_source_plotter
 import numpy as np
 import plotly.graph_objects as go
 import pytest
