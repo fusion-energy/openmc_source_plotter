@@ -2,7 +2,7 @@
 
 """Provides functions for plotting source information"""
 
-from typing import List, Union
+from typing import Union
 
 import numpy as np
 import openmc
@@ -12,12 +12,16 @@ import plotly.graph_objects
 
 class SourceWithPlotting(openmc.Source):
     r"""Inherits and extents the openmc.Source class to add source plotting
-    methods for energy, direction and position. Source sampling methods are also
-    provided for convenience. Additional methods are plot_source_energy(),
-    plot_source_position(), plot_source_direction(), sample_initial_particles().
+    methods for energy, direction and position. Source sampling methods are
+    also provided for convenience. Additional methods are plot_source_energy(),
+    plot_source_position(), plot_source_direction(), sample_initial_particles()
     """
 
-    def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
+    def sample_initial_particles(
+        self,
+        n_samples: int = 1000,
+        prn_seed: int = None
+    ):
 
         settings = openmc.Settings()
         settings.particles = 1
@@ -49,15 +53,15 @@ class SourceWithPlotting(openmc.Source):
         prn_seed: int = 1,
         energy_bins: Union[str, np.array] = "auto",
     ):
-        """makes a plot of the initial creation positions of an OpenMC source(s)
+        """makes a plot of the initial creation positions of an OpenMC source
 
         Args:
             figure: Optional base plotly figure to use for the plot. Passing in
                 a pre made figure allows one to build up plots with from
                 multiple sources. Defaults to None which makes a new figure for
                 the plot.
-            source: The openmc.Source object or list of openmc.Source objects to
-                plot.
+            source: The openmc.Source object or list of openmc.Source objects
+                to plot.
             n_samples: The number of source samples to obtain.
             prn_seed: The pseudorandom number seed
             energy_bins: Defaults to 'auto' which uses inbuilt auto binning in
@@ -77,10 +81,13 @@ class SourceWithPlotting(openmc.Source):
         data = self.sample_initial_particles(n_samples, prn_seed)
 
         e_values = [particle.E for particle in data]
-        print(e_values)
 
         # Calculate pdf for source energies
-        probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
+        probability, bin_edges = np.histogram(
+            e_values,
+            bins=energy_bins,
+            density=True
+        )
 
         # Plot source energy histogram
         figure.add_trace(
@@ -107,8 +114,8 @@ class SourceWithPlotting(openmc.Source):
                 a pre made figure allows one to build up plots with from
                 multiple sources. Defaults to None which makes a new figure for
                 the plot.
-            source: The openmc.Source object or list of openmc.Source objects to
-                plot.
+            source: The openmc.Source object or list of openmc.Source objects
+                to plot.
             n_samples: The number of source samples to obtain.
             prn_seed: The pseudorandom number seed
         """
@@ -156,15 +163,14 @@ class SourceWithPlotting(openmc.Source):
                 a pre made figure allows one to build up plots with from
                 multiple sources. Defaults to None which makes a new figure for
                 the plot.
-            source: The openmc.Source object or list of openmc.Source objects to
-                plot.
+            source: The openmc.Source object or list of openmc.Source objects
+                to plot.
             n_samples: The number of source samples to obtain.
             prn_seed: The pseudorandom number seed
         """
 
         figure = plotly.graph_objects.Figure()
         figure.update_layout(title="Particle initial directions")
-
 
         data = self.sample_initial_particles(n_samples, prn_seed)
 

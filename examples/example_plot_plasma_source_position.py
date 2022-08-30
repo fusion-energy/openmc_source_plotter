@@ -1,6 +1,6 @@
 
 from openmc_plasma_source import TokamakSource
-# openmc_plasma_source makes use of this package and 
+# openmc_plasma_source makes use of this package and
 # TokamakSource is a SourceWithPlotting object so it has
 # access to the plotting methods
 
