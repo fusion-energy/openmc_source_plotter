@@ -165,7 +165,6 @@ class SourceWithPlotting(openmc.Source):
         figure = plotly.graph_objects.Figure()
         figure.update_layout(title="Particle initial directions")
 
-
         data = self.sample_initial_particles(n_samples, prn_seed)
 
         figure.add_trace(
