@@ -3,7 +3,7 @@ from openmc_plasma_source import TokamakSource
 # TokamakSource is a SourceWithPlotting object so it has
 # access to the plotting methods
 
-my_source = TokamakSource(
+my_sources = TokamakSource(
     elongation=1.557,
     ion_density_centre=1.09e20,
     ion_density_peaking_factor=1,
@@ -24,6 +24,8 @@ my_source = TokamakSource(
 
 
 # plots the particle energy distribution
-plot = my_source.plot_source_position()
+plot = None
+for source in my_sources:
+    plot = source.plot_source_position(figure=plot)
 
 plot.show()
