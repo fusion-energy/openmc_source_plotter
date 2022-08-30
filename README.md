@@ -24,6 +24,9 @@ The package simply extends the default ```openmc.Source``` to provides additiona
 
 # Example plots
 
+Below are some basic examples, for more examples see the [examples folder](https://github.com/fusion-energy/openmc_source_plotter/tree/main/examples) for example usage scripts.
+
+
 ## Plot of energy distribution of the source
 
 ```python
@@ -124,6 +127,5 @@ plot.show()
 
 ![openmc particle source position plot](https://user-images.githubusercontent.com/8583900/179424915-bee56a87-6214-46ef-8625-92b8f4cbd1b3.png)
 
-# Usage
-
-See the [examples folder](https://github.com/fusion-energy/openmc_source_plotter/tree/main/examples) for example usage scripts.
+Tokamak sources can also be plotted using the [openmc-plasma-source](https://github.com/fusion-energy/openmc-plasma-source) package
+![openmc_source_plotter_openmc-plasma-source_tokamak](https://user-images.githubusercontent.com/8583900/187487894-ba0bd025-46f2-4c7d-8b15-3d260aed47a0.png)
