@@ -29,7 +29,7 @@ Below are some basic examples, for more examples see the [examples folder](https
 
 ```python
 import openmc
-import openmc_source_plotter  # extends openmc.Source with plotting utils
+import openmc_source_plotter  # extends openmc.Source with plotting functions
 
 # initialises a new source object
 my_source = openmc.Source()
@@ -49,7 +49,7 @@ plot.show()
 
 ```python
 import openmc
-import openmc_source_plotter
+import openmc_source_plotter  # extends openmc.Source with plotting functions
 
 # initialises a new source object
 my_dt_source = openmc.Source()
@@ -75,7 +75,7 @@ figure2.show()
 
 ```python
 import openmc
-import openmc_source_plotter
+import openmc_source_plotter  # extends openmc.Source with plotting functions
 
 # initializes a new source object
 my_source = openmc.Source()
@@ -95,7 +95,7 @@ plot.show()
 
 ```python
 import openmc
-import openmc_source_plotter
+import openmc_source_plotter  # extends openmc.Source with plotting functions
 
 # initialises a new source object
 my_source = openmc.Source()
