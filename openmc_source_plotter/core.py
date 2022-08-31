@@ -34,7 +34,7 @@ class Source(openmc.Source):
 
         geometry.export_to_xml()
 
-        openmc.lib.init()
+        openmc.lib.init(output=False)
         particles = openmc.lib.sample_external_source(
             n_samples=n_samples, prn_seed=prn_seed
         )
