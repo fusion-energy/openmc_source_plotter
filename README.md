@@ -30,12 +30,11 @@ Below are some basic examples, for more examples see the [examples folder](https
 ## Plot of energy distribution of the source
 
 ```python
-from openmc_source_plotter import SourceWithPlotting
 import openmc
-import numpy as np
+import openmc_source_plotter  # extends openmc.Source with plotting utils
 
 # initialises a new source object
-my_source = SourceWithPlotting()
+my_source = openmc.Source()
 
 # sets the energy distribution to a Muir distribution neutrons for DT fusion neutrons
 my_source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0)
@@ -51,18 +50,17 @@ plot.show()
 ## Plot of energy distribution of two sources
 
 ```python
-from openmc_source_plotter import SourceWithPlotting
 import openmc
-import numpy as np
+import openmc_source_plotter
 
 # initialises a new source object
-my_dt_source = SourceWithPlotting()
+my_dt_source = openmc.Source()
 
 # sets the energy distribution to a Muir distribution DT neutrons
 my_dt_source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0)
 
 # initialises a new source object
-my_dd_source = SourceWithPlotting()
+my_dd_source = openmc.Source()
 # sets the energy distribution to a Muir distribution DD neutrons
 my_dd_source.energy = openmc.stats.Muir(e0=2080000.0, m_rat=2.0, kt=20000.0)
 
@@ -78,11 +76,11 @@ figure2.show()
 ## Plot direction of particles
 
 ```python
-from openmc_source_plotter import SourceWithPlotting
 import openmc
+import openmc_source_plotter
 
 # initializes a new source object
-my_source = SourceWithPlotting()
+my_source = openmc.Source()
 
 # sets the direction to isotropic
 my_source.angle = openmc.stats.Isotropic()
@@ -98,11 +96,11 @@ plot.show()
 ## Plot position of particles
 
 ```python
-from openmc_source_plotter import SourceWithPlotting
 import openmc
+import openmc_source_plotter
 
 # initialises a new source object
-my_source = SourceWithPlotting()
+my_source = openmc.Source()
 
 # the distribution of radius is just a single value
 radius = openmc.stats.Discrete([10], [1])
