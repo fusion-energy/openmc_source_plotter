@@ -39,7 +39,7 @@ jobs:
           python examples/example_plot_source_position.py
           python examples/example_plot_two_source_energies.py
           pip install openmc_plasma_source
-          python examples/example_plot_plasma_source_position.py
+          # python examples/example_plot_plasma_source_position.py
 
       - name: Run test_utils
         run: |

@@ -1,8 +1,8 @@
 import openmc
-import openmc_source_plotter as osp
+import openmc_source_plotter  # overwrites the openmc.source method
 
 # initialises a new source object
-my_source = osp.SourceWithPlotting()
+my_source = openmc.Source()
 
 # sets the location of the source to x=0 y=0 z=0
 my_source.space = openmc.stats.Point((0, 0, 0))

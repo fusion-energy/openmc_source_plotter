@@ -1,5 +1,5 @@
-from openmc_source_plotter import SourceWithPlotting
 import openmc
+import openmc_source_plotter
 import numpy as np
 import plotly.graph_objects as go
 import pytest
@@ -8,7 +8,7 @@ import pytest
 @pytest.fixture
 def test_source():
     # initialises a new source object
-    my_source = SourceWithPlotting()
+    my_source = openmc.Source()
 
     # sets the location of the source to x=0 y=0 z=0
     my_source.space = openmc.stats.Point((0, 0, 0))

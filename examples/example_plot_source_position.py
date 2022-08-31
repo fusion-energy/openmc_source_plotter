@@ -1,8 +1,8 @@
-from openmc_source_plotter import SourceWithPlotting
 import openmc
+import openmc_source_plotter  # overwrites the openmc.source method
 
 # initialises a new source object
-my_source = SourceWithPlotting()
+my_source = openmc.Source()
 
 # the distribution of radius is just a single value
 radius = openmc.stats.Discrete([10], [1])

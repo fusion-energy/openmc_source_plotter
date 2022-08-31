@@ -1,8 +1,8 @@
-import openmc_source_plotter as osp
 import openmc
+import openmc_source_plotter  # overwrites the openmc.source method
 
 # initializes a new source object
-my_source = osp.SourceWithPlotting()
+my_source = openmc.Source()
 
 # sets the direction to isotropic
 my_source.angle = openmc.stats.Isotropic()

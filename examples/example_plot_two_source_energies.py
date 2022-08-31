@@ -1,14 +1,14 @@
-import openmc_source_plotter as osp
 import openmc
+import openmc_source_plotter  # overwrites the openmc.source method
 
 # initialises a new source object
-my_dt_source = osp.SourceWithPlotting()
+my_dt_source = openmc.Source()
 
 # sets the energy distribution to a Muir distribution DT neutrons
 my_dt_source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0)
 
 # initialises a new source object
-my_dd_source = osp.SourceWithPlotting()
+my_dd_source = openmc.Source()
 # sets the energy distribution to a Muir distribution DD neutrons
 my_dd_source.energy = openmc.stats.Muir(e0=2080000.0, m_rat=2.0, kt=20000.0)
 
