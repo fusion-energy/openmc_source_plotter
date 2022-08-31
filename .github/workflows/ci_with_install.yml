@@ -5,6 +5,8 @@
 name: CI with install
 
 on:
+  push:
+      - main
   pull_request:
     branches:
       - develop
