@@ -1,6 +1,4 @@
-[![CI with install](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/ci_with_install.yml/badge.svg)](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/ci_with_install.yml)
-
-[![Python Flake8 Lint](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/lint.yaml/badge.svg)](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/lint.yaml)
+[![CI with install](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/ci_with_install.yml/badge.svg?branch=main)](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/ci_with_install.yml)
 
 [![Upload Python Package](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/python-publish.yml/badge.svg)](https://github.com/fusion-energy/openmc_source_plotter/actions/workflows/python-publish.yml)
 
