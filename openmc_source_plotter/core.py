@@ -10,6 +10,7 @@ import openmc.lib
 import plotly.graph_objects
 
 
+
 class Source(openmc.Source):
     r"""Inherits and extents the openmc.Source class to add source plotting
     methods for energy, direction and position. Source sampling methods are
@@ -99,7 +100,7 @@ class Source(openmc.Source):
         n_samples: int = 2000,
         prn_seed: int = 1,
     ):
-        """makes a plot of the initial creation postions of an OpenMC source(s)
+        """makes a plot of the initial creation positions of an OpenMC source(s)
 
         Args:
             figure: Optional base plotly figure to use for the plot. Passing in
