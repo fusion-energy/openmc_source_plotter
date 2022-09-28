@@ -10,7 +10,6 @@ import openmc.lib
 import plotly.graph_objects
 
 
-
 class Source(openmc.Source):
     r"""Inherits and extents the openmc.Source class to add source plotting
     methods for energy, direction and position. Source sampling methods are
