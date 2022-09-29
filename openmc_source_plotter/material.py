@@ -15,17 +15,18 @@ class Material(openmc.Material):
         Args:
             label_top: Optionally label the n highest activity energies with
                 the nuclide that generates them.
-        
+
         Returns:
             Matplotlib pyplot object.
         """
-        
+
         plt.clf()
         if label_top:
             energies_to_label = []
-            labels=[]
+            labels = []
             possible_energies_to_label = []
             import lineid_plot
+
             atoms = self.get_nuclide_atoms()
             for nuc, num_atoms in atoms.items():
                 dists = []
@@ -36,21 +37,29 @@ class Material(openmc.Material):
                     probs.append(num_atoms)
                     combo = openmc.data.combine_distributions(dists, probs)
                     for p, x in zip(combo.p, combo.x):
-                        possible_energies_to_label.append((nuc,p,x))
+                        possible_energies_to_label.append((nuc, p, x))
 
-            possible_energies_to_label = sorted(possible_energies_to_label, key=lambda x: x[1], reverse=True)[:label_top]
+            possible_energies_to_label = sorted(
+                possible_energies_to_label, key=lambda x: x[1], reverse=True
+            )[:label_top]
             for entry in possible_energies_to_label:
                 energies_to_label.append(entry[2])
                 labels.append(entry[0])
 
-            lineid_plot.plot_line_ids(self.decay_photon_energy.x, self.decay_photon_energy.p, energies_to_label, labels)
+            lineid_plot.plot_line_ids(
+                self.decay_photon_energy.x,
+                self.decay_photon_energy.p,
+                energies_to_label,
+                labels,
+            )
 
         else:
             energy_dis = self.decay_photon_energy
             plt.plot(energy_dis.x, energy_dis.p)
 
-        plt.xlabel('Energy [eV]')
-        plt.ylabel('Activity [Bq/s]')
+        plt.xlabel("Energy [eV]")
+        plt.ylabel("Activity [Bq/s]")
         return plt
+
 
 openmc.Material = Material
