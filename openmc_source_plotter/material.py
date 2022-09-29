@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 
 
 class Material(openmc.Material):
-
     def plot_gamma_emission(
         self,
         label_top: int = None,

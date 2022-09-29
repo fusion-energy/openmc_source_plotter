@@ -3,7 +3,7 @@ import openmc.deplete
 import openmc_source_plotter  # adds plot_gamma_emission plot to materials
 
 
-openmc.config['chain_file']='chain-endf.xml'
+openmc.config["chain_file"] = "chain-endf.xml"
 
 my_material = openmc.Material()
 my_material.add_nuclide('Xe135', 1e-12)
