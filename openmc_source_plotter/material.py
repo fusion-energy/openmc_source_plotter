@@ -6,37 +6,52 @@ class Material(openmc.Material):
 
     def plot_gamma_emission(
         self,
-        threshold,
+        label_top: int = None,
     ):
+        """makes a plot of the gamma energy spectra for a material. The
+        material should contain unstable nuclide which undergo gamma emission
+        to produce a plot. Such materials can be made manually or obtained via
+        openmc deplete simulations.
+
+        Args:
+            label_top: Optionally label the n highest activity energies with
+                the nuclide that generates them.
         
-        import lineid_plot
-
-        energies_to_label = []
-        labels=[]
-        atoms = self.get_nuclide_atoms()
-        for nuc, num_atoms in atoms.items():
-            dists = []
-            probs = []
-            print(nuc)
-            source_per_atom = openmc.data.decay_photon_energy(nuc)
-            if source_per_atom is not None:
-                dists.append(source_per_atom)
-                probs.append(num_atoms)
-                combo = openmc.data.combine_distributions(dists, probs)
-                for p,x in zip(combo.p, combo.x):
-                    if p>threshold:
-                        print('   ',p,x)
-                        energies_to_label.append(x)
-                        labels.append(nuc)
-
-        lineid_plot.plot_line_ids(self.decay_photon_energy.x, self.decay_photon_energy.p, energies_to_label, labels)
-
-
+        Returns:
+            Matplotlib pyplot object.
+        """
         
-        # plt.plot()
-        plt.xlabel('Energy (eV)')
-        # plt.xscale('log')
-        plt.ylabel('Probability')
+        plt.clf()
+        if label_top:
+            energies_to_label = []
+            labels=[]
+            possible_energies_to_label = []
+            import lineid_plot
+            atoms = self.get_nuclide_atoms()
+            for nuc, num_atoms in atoms.items():
+                dists = []
+                probs = []
+                source_per_atom = openmc.data.decay_photon_energy(nuc)
+                if source_per_atom is not None:
+                    dists.append(source_per_atom)
+                    probs.append(num_atoms)
+                    combo = openmc.data.combine_distributions(dists, probs)
+                    for p, x in zip(combo.p, combo.x):
+                        possible_energies_to_label.append((nuc,p,x))
+
+            possible_energies_to_label = sorted(possible_energies_to_label, key=lambda x: x[1], reverse=True)[:label_top]
+            for entry in possible_energies_to_label:
+                energies_to_label.append(entry[2])
+                labels.append(entry[0])
+
+            lineid_plot.plot_line_ids(self.decay_photon_energy.x, self.decay_photon_energy.p, energies_to_label, labels)
+
+        else:
+            energy_dis = self.decay_photon_energy
+            plt.plot(energy_dis.x, energy_dis.p)
+
+        plt.xlabel('Energy [eV]')
+        plt.ylabel('Activity [Bq/s]')
         return plt
 
 openmc.Material = Material
