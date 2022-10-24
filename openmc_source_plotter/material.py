@@ -46,9 +46,24 @@ class Material(openmc.Material):
                 energies_to_label.append(entry[2])
                 labels.append(entry[0])
 
+            probs = []
+            en = []
+            energy_dis = self.decay_photon_energy
+            for p in energy_dis.p:
+                probs.append(0)
+                probs.append(p)
+                probs.append(0)
+            for x in energy_dis.x:
+                en.append(x)
+                en.append(x)
+                en.append(x)
+            # print(en)
+            # print(probs)
             lineid_plot.plot_line_ids(
-                self.decay_photon_energy.x,
-                self.decay_photon_energy.p,
+                en,
+                # self.decay_photon_energy.x,
+                probs,
+                # self.decay_photon_energy.p,
                 energies_to_label,
                 labels,
             )
@@ -68,8 +83,8 @@ class Material(openmc.Material):
 
             # plt.scatter(energy_dis.x, energy_dis.p)
             plt.plot(en, probs)
-            print(energy_dis.p)
-            print(energy_dis.x)
+            # print(energy_dis.p)
+            # print(energy_dis.x)
         plt.xlabel("Energy [eV]")
         plt.ylabel("Activity [Bq/s]")
         return plt
