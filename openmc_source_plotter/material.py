@@ -54,9 +54,22 @@ class Material(openmc.Material):
             )
 
         else:
+            probs = []
+            en = []
             energy_dis = self.decay_photon_energy
-            plt.plot(energy_dis.x, energy_dis.p)
+            for p in energy_dis.p:
+                probs.append(0)
+                probs.append(p)
+                probs.append(0)
+            for x in energy_dis.x:
+                en.append(x)
+                en.append(x)
+                en.append(x)
 
+            # plt.scatter(energy_dis.x, energy_dis.p)
+            plt.plot(en, probs)
+            print(energy_dis.p)
+            print(energy_dis.x)
         plt.xlabel("Energy [eV]")
         plt.ylabel("Activity [Bq/s]")
         return plt
