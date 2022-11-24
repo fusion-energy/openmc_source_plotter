@@ -166,13 +166,21 @@ class Source(openmc.Source):
 
         data = self.sample_initial_particles(n_samples, prn_seed)
 
-        biggest_coord = max(max([particle.r[0] for particle in data]), max([particle.r[1] for particle in data]), max([particle.r[2] for particle in data]))
-        smallest_coord = min(min([particle.r[0] for particle in data]), min([particle.r[1] for particle in data]), min([particle.r[2] for particle in data]))
+        biggest_coord = max(
+            max([particle.r[0] for particle in data]),
+            max([particle.r[1] for particle in data]),
+            max([particle.r[2] for particle in data]),
+        )
+        smallest_coord = min(
+            min([particle.r[0] for particle in data]),
+            min([particle.r[1] for particle in data]),
+            min([particle.r[2] for particle in data]),
+        )
 
         figure.add_trace(
             {
-                "type": 'scatter3d',
-                "marker":{"color": 'rgba(255,255,255,0)'},
+                "type": "scatter3d",
+                "marker": {"color": "rgba(255,255,255,0)"},
                 "x": [biggest_coord, smallest_coord],
                 "y": [biggest_coord, smallest_coord],
                 "z": [biggest_coord, smallest_coord],
