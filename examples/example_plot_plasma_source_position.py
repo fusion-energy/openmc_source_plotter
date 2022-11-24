@@ -21,6 +21,8 @@ my_sources = TokamakSource(
     shafranov_factor=0.44789,
     triangularity=0.270,
     ion_temperature_beta=6,
+    angles=(0, 3.14),  # makes a sector of 0 radians to 3.14 radians
+    sample_size=100,  # reduces the number of samples from a default of 1000 to reduce plot time
 ).make_openmc_sources()
 
 
