@@ -99,7 +99,7 @@ class Source(openmc.Source):
         n_samples: int = 2000,
         prn_seed: int = 1,
     ):
-        """makes a plot of the initial creation postions of an OpenMC source(s)
+        """makes a plot of the initial creation positions of an OpenMC source(s)
 
         Args:
             figure: Optional base plotly figure to use for the plot. Passing in
@@ -148,7 +148,7 @@ class Source(openmc.Source):
         n_samples: int = 2000,
         prn_seed: int = 1,
     ):
-        """makes a plot of the initial creation postions of an OpenMC source(s)
+        """makes a plot of the initial creation positions of an OpenMC source(s)
 
         Args:
             figure: Optional base plotly figure to use for the plot. Passing in
@@ -166,6 +166,18 @@ class Source(openmc.Source):
 
         data = self.sample_initial_particles(n_samples, prn_seed)
 
+        biggest_coord = max(max([particle.r[0] for particle in data]), max([particle.r[1] for particle in data]), max([particle.r[2] for particle in data]))
+        smallest_coord = min(min([particle.r[0] for particle in data]), min([particle.r[1] for particle in data]), min([particle.r[2] for particle in data]))
+
+        figure.add_trace(
+            {
+                "type": 'scatter3d',
+                "marker":{"color": 'rgba(255,255,255,0)'},
+                "x": [biggest_coord, smallest_coord],
+                "y": [biggest_coord, smallest_coord],
+                "z": [biggest_coord, smallest_coord],
+            }
+        )
         figure.add_trace(
             {
                 "type": "cone",
