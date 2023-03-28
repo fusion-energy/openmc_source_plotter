@@ -1,10 +1,46 @@
 [build-system]
-requires = [
-    "setuptools >= 46.4.0",
-    "wheel",
-    "setuptools_scm[toml] >= 6.3.1",
-]
+requires = ["setuptools >= 65.4.0", "setuptools_scm[toml]>=7.0.5"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "openmc_source_plotter"
+authors = [
+  { name="Jonathan Shimwell", email="mail@jshimwell.com" },
+]
+license = {file = "LICENSE.txt"}
+description = "A Python package for extracting and plotting the locations, directions, energy distributions of OpenMC source particles."
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["energy", "plot", "source", "particle", "coordinates", "direction", "openmc", "gamma"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "h5py",
+    "plotly",
+    "numpy",
+]
+dynamic = ["version"]
+
 [tool.setuptools_scm]
-write_to = "openmc_source_plotter/_version.py"
+write_to = "src/openmc_source_plotter/_version.py"
+
+[project.optional-dependencies]
+tests = [
+    "pytest"
+]
+gammas = [
+    "lineid_plot"  # appears to not be maintained hence not in main dependencies
+]
+
+[project.scripts]
+openmc_source_plotter = "openmc_source_plotter.launch:main"
+
+[project.urls]
+"Homepage" = "https://github.com/fusion-energy/openmc_source_plotter"
+"Bug Tracker" = "https://github.com/fusion-energy/openmc_source_plotter/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
