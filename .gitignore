@@ -137,3 +137,4 @@ openmc_source_plotter/_version.py
 
 # plots
 *.png
+src/openmc_source_plotter/_version.py
