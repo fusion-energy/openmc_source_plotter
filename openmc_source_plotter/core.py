@@ -2,7 +2,7 @@
 
 """Provides functions for plotting source information"""
 
-from typing import Union
+import typing
 
 import numpy as np
 import openmc
@@ -47,7 +47,8 @@ class Source(openmc.Source):
         figure: plotly.graph_objects.Figure = None,
         n_samples: int = 2000,
         prn_seed: int = 1,
-        energy_bins: Union[str, np.array] = "auto",
+        energy_bins: typing.Union[str, np.array] = "auto",
+        name: typing.Optional[str] = None
     ):
         """makes a plot of the initial creation positions of an OpenMC source
 
@@ -63,6 +64,7 @@ class Source(openmc.Source):
             energy_bins: Defaults to 'auto' which uses inbuilt auto binning in
                 Numpy bins can also be manually set by passing in a numpy array
                 of bin edges.
+            name: the legend name to use
         """
 
         if figure is None:
@@ -81,6 +83,9 @@ class Source(openmc.Source):
         # Calculate pdf for source energies
         probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
 
+        # scaling by strength
+        probability = probability * self.strength
+
         # Plot source energy histogram
         figure.add_trace(
             plotly.graph_objects.Scatter(
@@ -88,6 +93,7 @@ class Source(openmc.Source):
                 y=probability * np.diff(bin_edges),
                 line={"shape": "hv"},
                 hoverinfo="text",
+                name=name
             )
         )
 
