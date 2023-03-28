@@ -11,7 +11,6 @@ import plotly.graph_objects
 
 
 def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
-
     settings = openmc.Settings()
     settings.particles = 1
     settings.batches = 1
@@ -34,6 +33,7 @@ def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
     openmc.lib.finalize()
 
     return particles
+
 
 def plot_source_energy(
     self,
@@ -86,6 +86,7 @@ def plot_source_energy(
 
     return figure
 
+
 def plot_source_position(
     self,
     figure=None,
@@ -135,6 +136,7 @@ def plot_source_position(
 
     return figure
 
+
 def plot_source_direction(
     self,
     figure=None,
@@ -181,6 +183,7 @@ def plot_source_direction(
     )
 
     return figure
+
 
 """extents the openmc.Source class to add source plotting
 methods for energy, direction and position. Source sampling methods are

@@ -22,6 +22,7 @@ def plot_gamma_emission(
     plt.clf()
     if label_top:
         import lineid_plot
+
         energies_to_label = []
         labels = []
         possible_energies_to_label = []
@@ -87,6 +88,7 @@ def plot_gamma_emission(
     plt.xlabel("Energy [eV]")
     plt.ylabel("Activity [Bq/s]")
     return plt
+
 
 # patching the functionality into openmc
 openmc.Material.plot_gamma_emission = plot_gamma_emission
