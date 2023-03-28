@@ -18,7 +18,6 @@ class Source(openmc.Source):
     """
 
     def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
-
         settings = openmc.Settings()
         settings.particles = 1
         settings.batches = 1
@@ -48,7 +47,7 @@ class Source(openmc.Source):
         n_samples: int = 2000,
         prn_seed: int = 1,
         energy_bins: typing.Union[str, np.array] = "auto",
-        name: typing.Optional[str] = None
+        name: typing.Optional[str] = None,
     ):
         """makes a plot of the initial creation positions of an OpenMC source
 
@@ -93,7 +92,7 @@ class Source(openmc.Source):
                 y=probability * np.diff(bin_edges),
                 line={"shape": "hv"},
                 hoverinfo="text",
-                name=name
+                name=name,
             )
         )
 
