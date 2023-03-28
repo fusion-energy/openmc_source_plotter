@@ -2,7 +2,6 @@ import openmc
 import matplotlib.pyplot as plt
 
 
-
 def plot_gamma_emission(
     self,
     label_top: int = None,

@@ -34,6 +34,7 @@ def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
 
     return particles
 
+
 def plot_source_energy(
     self,
     figure: plotly.graph_objects.Figure = None,
@@ -91,6 +92,7 @@ def plot_source_energy(
 
     return figure
 
+
 def plot_source_position(
     self,
     figure=None,
@@ -139,6 +141,7 @@ def plot_source_position(
     figure.update_layout(title=title)
 
     return figure
+
 
 def plot_source_direction(
     self,
@@ -206,6 +209,7 @@ def plot_source_direction(
     )
 
     return figure
+
 
 """
 Extents the openmc.Source class to add source plotting
