@@ -217,7 +217,7 @@ methods for energy, direction and position. Source sampling methods are
 also provided for convenience. Additional methods are plot_source_energy(),
 plot_source_position(), plot_source_direction(), sample_initial_particles()
 """
-openmc.Source.sample_initial_particles = sample_initial_particles
-openmc.Source.plot_source_energy = plot_source_energy
-openmc.Source.plot_source_position = plot_source_position
-openmc.Source.plot_source_direction = plot_source_direction
+openmc.SourceBase.sample_initial_particles = sample_initial_particles
+openmc.SourceBase.plot_source_energy = plot_source_energy
+openmc.SourceBase.plot_source_position = plot_source_position
+openmc.SourceBase.plot_source_direction = plot_source_direction
