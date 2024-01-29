@@ -45,6 +45,7 @@ def test_sample_initial_particles(test_model):
         assert particle.r == (1.0, 2.0, 3.0)
     assert len(particles) == 43
 
+
 def test_energy_plot_with_bins(test_model):
     plot = test_model.plot_source_energy(
         n_samples=10,
