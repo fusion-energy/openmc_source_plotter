@@ -18,14 +18,6 @@ def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
         self.materials.export_to_xml()
         self.geometry.export_to_xml()
 
-        openmc.lib.init(output=False)
-        particles = openmc.lib.sample_external_source(
-            n_samples=n_samples, prn_seed=prn_seed
-        )
-        openmc.lib.finalize()
-
-        return particles
-
     else:  # source object
 
         settings = openmc.Settings()
@@ -43,13 +35,13 @@ def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
 
         geometry.export_to_xml()
 
-        openmc.lib.init(output=False)
-        particles = openmc.lib.sample_external_source(
-            n_samples=n_samples, prn_seed=prn_seed
-        )
-        openmc.lib.finalize()
+    openmc.lib.init(output=False)
+    particles = openmc.lib.sample_external_source(
+        n_samples=n_samples, prn_seed=prn_seed
+    )
+    openmc.lib.finalize()
 
-        return particles
+    return particles
 
 
 def plot_source_energy(
@@ -94,7 +86,8 @@ def plot_source_energy(
     probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
 
     # scaling by strength
-    probability = probability * self.strength
+    if isinstance(self, openmc.SourceBase):
+        probability = probability * self.strength
 
     # Plot source energy histogram
     figure.add_trace(
@@ -239,5 +232,13 @@ openmc.model.Model.sample_initial_particles = sample_initial_particles
 openmc.Model.sample_initial_particles = sample_initial_particles
 
 openmc.SourceBase.plot_source_energy = plot_source_energy
+openmc.model.Model.plot_source_energy = plot_source_energy
+openmc.Model.plot_source_energy = plot_source_energy
+
 openmc.SourceBase.plot_source_position = plot_source_position
+openmc.model.Model.plot_source_position = plot_source_position
+openmc.Model.plot_source_position = plot_source_position
+
 openmc.SourceBase.plot_source_direction = plot_source_direction
+openmc.model.Model.plot_source_direction = plot_source_direction
+openmc.Model.plot_source_direction = plot_source_direction
