@@ -11,28 +11,45 @@ import plotly.graph_objects
 
 
 def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
-    settings = openmc.Settings()
-    settings.particles = 1
-    settings.batches = 1
-    settings.source = self
-    settings.export_to_xml()
 
-    materials = openmc.Materials()
-    materials.export_to_xml()
+    if isinstance(self, openmc.Model):
 
-    sph = openmc.Sphere(r=9999999999, boundary_type="vacuum")
-    cell = openmc.Cell(region=-sph)
-    geometry = openmc.Geometry([cell])
+        self.settings.export_to_xml()
+        self.materials.export_to_xml()
+        self.geometry.export_to_xml()
 
-    geometry.export_to_xml()
+        openmc.lib.init(output=False)
+        particles = openmc.lib.sample_external_source(
+            n_samples=n_samples, prn_seed=prn_seed
+        )
+        openmc.lib.finalize()
 
-    openmc.lib.init(output=False)
-    particles = openmc.lib.sample_external_source(
-        n_samples=n_samples, prn_seed=prn_seed
-    )
-    openmc.lib.finalize()
+        return particles
 
-    return particles
+    else:  # source object
+
+        settings = openmc.Settings()
+        settings.particles = 1
+        settings.batches = 1
+        settings.source = self
+        settings.export_to_xml()
+
+        materials = openmc.Materials()
+        materials.export_to_xml()
+
+        sph = openmc.Sphere(r=9999999999, boundary_type="vacuum")
+        cell = openmc.Cell(region=-sph)
+        geometry = openmc.Geometry([cell])
+
+        geometry.export_to_xml()
+
+        openmc.lib.init(output=False)
+        particles = openmc.lib.sample_external_source(
+            n_samples=n_samples, prn_seed=prn_seed
+        )
+        openmc.lib.finalize()
+
+        return particles
 
 
 def plot_source_energy(
@@ -218,6 +235,9 @@ also provided for convenience. Additional methods are plot_source_energy(),
 plot_source_position(), plot_source_direction(), sample_initial_particles()
 """
 openmc.SourceBase.sample_initial_particles = sample_initial_particles
+openmc.model.Model.sample_initial_particles = sample_initial_particles
+openmc.Model.sample_initial_particles = sample_initial_particles
+
 openmc.SourceBase.plot_source_energy = plot_source_energy
 openmc.SourceBase.plot_source_position = plot_source_position
 openmc.SourceBase.plot_source_direction = plot_source_direction

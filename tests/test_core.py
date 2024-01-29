@@ -11,7 +11,7 @@ def test_source():
     my_source = openmc.Source()
 
     # sets the location of the source to x=0 y=0 z=0
-    my_source.space = openmc.stats.Point((0, 0, 0))
+    my_source.space = openmc.stats.Point((4.,5.,6.))
 
     # sets the direction to isotropic
     my_source.angle = openmc.stats.Isotropic()
@@ -19,13 +19,58 @@ def test_source():
     # sets the energy distribution to 100% 14MeV neutrons
     my_source.energy = openmc.stats.Discrete([14e6], [1])
 
+    my_source.particle = 'neutron'
+
     my_source = my_source
     return my_source
 
+@pytest.fixture
+def test_model():
+    # initialises a new source object
+    my_source = openmc.Source()
 
-def test_sample_initial_particles(test_source):
-    data = test_source.sample_initial_particles(n_samples=42)
-    assert len(data) == 42
+    # sets the location of the source to x=0 y=0 z=0
+    my_source.space = openmc.stats.Point((1.,2.,3.))
+
+    # sets the direction to isotropic
+    my_source.angle = openmc.stats.Isotropic()
+
+    # sets the energy distribution to 100% 14MeV neutrons
+    my_source.energy = openmc.stats.Discrete([15e6], [1])
+
+    my_source.particle = 'photon'
+
+    settings = openmc.Settings()
+    settings.particles = 1
+    settings.batches = 1
+    settings.source = my_source
+
+    materials = openmc.Materials()
+
+    sph = openmc.Sphere(r=9999999999, boundary_type="vacuum")
+    cell = openmc.Cell(region=-sph)
+    geometry = openmc.Geometry([cell])
+
+    model = openmc.Model(geometry, materials, settings)
+
+    return model
+
+
+def test_source_sample_initial_particles(test_source):
+    particles = test_source.sample_initial_particles(n_samples=42)
+    for particle in particles:
+        assert particle.E == 14e6
+        assert str(particle.particle) == 'neutron'
+        assert particle.r == (4.,5.,6.)
+    assert len(particles) == 42
+
+def test_model_sample_initial_particles(test_model):
+    particles = test_model.sample_initial_particles(n_samples=43)
+    for particle in particles:
+        assert particle.E == 15e6
+        assert str(particle.particle) == 'photon'
+        assert particle.r == (1.,2.,3.)
+    assert len(particles) == 43
 
 
 def test_energy_plot_with_bins(test_source):
