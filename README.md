@@ -12,15 +12,15 @@ pip install openmc_source_plotter
 
 # Features
 
-The package simply extends the default ```openmc.IndependentSourceBase``` to provides additional functions that:
+The package simply extends the default ```openmc.IndependentSourceBase``` and ```openmc.Model``` to provides additional functions that:
 
 - extract the positions, directions and energy of particles
-- visualise an ```openmc.IndependentSourceBase``` with respect to:
+- visualise a source with respect to:
   - direction
   - energy
   - position
 
-Or just sample the with ```openmc.Model.sample_initial_particles```
+Or just provide the initial particles with ```sample_initial_particles```
 
 # Example plots
 
