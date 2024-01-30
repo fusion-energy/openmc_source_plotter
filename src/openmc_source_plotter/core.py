@@ -24,15 +24,15 @@ def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
         settings.particles = 1
         settings.batches = 1
         settings.source = self
-        settings.export_to_xml()
 
         materials = openmc.Materials()
-        materials.export_to_xml()
 
         sph = openmc.Sphere(r=9999999999, boundary_type="vacuum")
         cell = openmc.Cell(region=-sph)
         geometry = openmc.Geometry([cell])
 
+        settings.export_to_xml()
+        materials.export_to_xml()
         geometry.export_to_xml()
 
     openmc.lib.init(output=False)
