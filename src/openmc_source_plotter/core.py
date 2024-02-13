@@ -9,6 +9,17 @@ import openmc
 import openmc.lib
 import plotly.graph_objects
 
+import pkg_resources 
+
+system_openmc_version = pkg_resources.parse_version(openmc.__version__)
+min_openmc_version = pkg_resources.parse_version("0.14.0")
+if system_openmc_version < min_openmc_version:
+    msg = (
+        "openmc_source_plotter requires openmc version 0.14.0 or above. "
+        f"You have openmc version {system_openmc_version} installed. "
+        "Please update the version of openmc installed" 
+    )
+    raise ImportError(msg)
 
 def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
 
