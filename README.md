@@ -6,6 +6,8 @@ A Python package for plotting the positions, directions or energy distributions 
 
 # Installation
 
+You will need to have OpenMC version 0.14.0 or newer installed first.
+
 ```bash
 pip install openmc_source_plotter
 ```
