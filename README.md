@@ -31,33 +31,33 @@ Below are some basic examples, for more examples see the [examples folder](https
 
 ## Plot of energy distribution of the source
 
-:chain:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_plot_source_energy.py) to example script.
+:link:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_plot_source_energy.py) to example script.
 
 ![openmc particle source energy plot](https://user-images.githubusercontent.com/8583900/143615694-a3578115-f8a2-4971-bf26-458177b4f113.png)
 
 ## Plot of energy distribution of two sources
 
-:chain:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_plot_two_source_energies.py) to example script.
+:link:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_plot_two_source_energies.py) to example script.
 
 ![openmc particle source energy plot](https://user-images.githubusercontent.com/8583900/151376414-fb1555eb-61d1-4c82-bc4d-a05f62819c5d.png)
 
 ## Plot direction of particles
 
-:chain:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_plot_source_direction.py) to example script.
+:link:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_plot_source_direction.py) to example script.
 
 ![openmc particle source direction plot](https://user-images.githubusercontent.com/8583900/143615706-3b3a8467-0233-42d6-a66c-d536c80a01d8.png)
 
 
 ## Plot position of particles
 
-:chain:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_plot_source_position.py) to example script.
+:link:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_plot_source_position.py) to example script.
 
 
 ![openmc particle source position plot](https://user-images.githubusercontent.com/8583900/179424915-bee56a87-6214-46ef-8625-92b8f4cbd1b3.png)
 
 ## Plot labeled gamma lines from material
 
-:chain:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_gamma_spec_plot.py) to example script.
+:link:[Link](https://github.com/fusion-energy/openmc_source_plotter/blob/main/examples/example_gamma_spec_plot.py) to example script.
 
 ![gamma spec with labels](examples/gamma_spec.png)
 
