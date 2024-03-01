@@ -3,7 +3,7 @@
 """Provides functions for plotting source information"""
 
 import typing
-
+from tempfile import TemporaryDirectory
 import numpy as np
 import openmc
 import openmc.lib
@@ -24,34 +24,43 @@ if system_openmc_version < min_openmc_version:
 
 def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
 
-    if isinstance(self, openmc.Model):
+    with TemporaryDirectory() as tmpdir:
 
-        self.settings.export_to_xml()
-        self.materials.export_to_xml()
-        self.geometry.export_to_xml()
+        if isinstance(self, openmc.Model):
 
-    else:  # source object
+            model = self
 
-        settings = openmc.Settings()
-        settings.particles = 1
-        settings.batches = 1
-        settings.source = self
+        else:
 
-        materials = openmc.Materials()
+            model = openmc.Model()
 
-        sph = openmc.Sphere(r=9999999999, boundary_type="vacuum")
-        cell = openmc.Cell(region=-sph)
-        geometry = openmc.Geometry([cell])
+            materials = openmc.Materials()
+            model.materials = materials
 
-        settings.export_to_xml()
-        materials.export_to_xml()
-        geometry.export_to_xml()
+            sph = openmc.Sphere(r=9999999999, boundary_type="vacuum")
+            cell = openmc.Cell(region=-sph)
+            geometry = openmc.Geometry([cell])
+            model.geometry = geometry
 
-    openmc.lib.init(output=False)
-    particles = openmc.lib.sample_external_source(
-        n_samples=n_samples, prn_seed=prn_seed
-    )
-    openmc.lib.finalize()
+            if isinstance(self, openmc.Settings):
+
+                model.settings = self
+
+            else:  # source object
+
+                settings = openmc.Settings()
+                settings.particles = 1
+                settings.batches = 1
+                settings.source = self
+                model.settings = settings
+
+        model.export_to_model_xml()
+
+        openmc.lib.init(output=False)
+        particles = openmc.lib.sample_external_source(
+            n_samples=n_samples, prn_seed=prn_seed
+        )
+        openmc.lib.finalize()
 
     return particles
 
@@ -242,15 +251,19 @@ plot_source_position(), plot_source_direction(), sample_initial_particles()
 openmc.SourceBase.sample_initial_particles = sample_initial_particles
 openmc.model.Model.sample_initial_particles = sample_initial_particles
 openmc.Model.sample_initial_particles = sample_initial_particles
+openmc.Settings.sample_initial_particles = sample_initial_particles
 
 openmc.SourceBase.plot_source_energy = plot_source_energy
 openmc.model.Model.plot_source_energy = plot_source_energy
 openmc.Model.plot_source_energy = plot_source_energy
+openmc.Settings.plot_source_energy = plot_source_energy
 
 openmc.SourceBase.plot_source_position = plot_source_position
 openmc.model.Model.plot_source_position = plot_source_position
 openmc.Model.plot_source_position = plot_source_position
+openmc.Settings.plot_source_position = plot_source_position
 
 openmc.SourceBase.plot_source_direction = plot_source_direction
 openmc.model.Model.plot_source_direction = plot_source_direction
 openmc.Model.plot_source_direction = plot_source_direction
+openmc.Settings.plot_source_direction = plot_source_direction
