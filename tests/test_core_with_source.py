@@ -47,6 +47,12 @@ def test_energy_plot(test_source):
     assert isinstance(plot, go.Figure)
     assert len(plot.data[0]["x"]) == 1
 
+def test_energy_plot_axis(test_source):
+    plot = test_source.plot_source_energy(n_samples=10, xaxis_type='log', yaxis_type='linear', xaxis_units='eV')
+    plot = test_source.plot_source_energy(n_samples=10, xaxis_type='linear', yaxis_type='log', xaxis_units='MeV')
+    assert isinstance(plot, go.Figure)
+    assert len(plot.data[0]["x"]) == 1
+
 
 def test_position_plot(test_source):
     plot = test_source.plot_source_position(n_samples=10)
