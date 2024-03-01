@@ -29,7 +29,7 @@ def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
         if isinstance(self, openmc.Model):
 
             model = self
-        
+
         else:
 
             model = openmc.Model()
