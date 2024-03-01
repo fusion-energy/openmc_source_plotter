@@ -98,7 +98,7 @@ def plot_source_energy(
         xaxis_units: The units to use for the x axis. Options are 'eV' or 'MeV'.
     """
 
-    if xaxis_units not in ['eV', 'MeV']:
+    if xaxis_units not in ["eV", "MeV"]:
         raise ValueError(f"xaxis_units must be either 'eV' or 'MeV' not {xaxis_units}")
 
     if figure is None:
@@ -121,8 +121,8 @@ def plot_source_energy(
     if isinstance(self, openmc.SourceBase):
         probability = probability * self.strength
     energy = bin_edges[:-1]
-    if xaxis_units == 'MeV':
-        energy = energy /1e6
+    if xaxis_units == "MeV":
+        energy = energy / 1e6
     # Plot source energy histogram
     figure.add_trace(
         plotly.graph_objects.Scatter(
