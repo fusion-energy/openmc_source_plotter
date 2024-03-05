@@ -31,7 +31,7 @@ def test_source():
 
 
 def test_sample_initial_particles(test_source):
-    particles = test_source.sample_initial_particles(n_samples=42)
+    particles = sample_initial_particles(this=test_source, n_samples=42)
     for particle in particles:
         assert particle.E == 14e6
         assert str(particle.particle) == "neutron"
@@ -40,7 +40,8 @@ def test_sample_initial_particles(test_source):
 
 
 def test_energy_plot_with_bins(test_source):
-    plot = test_source.plot_source_energy(
+    plot = plot_source_energy(
+        this=test_source,
         n_samples=10,
         energy_bins=np.linspace(0, 20e6, 100),
     )
@@ -48,46 +49,50 @@ def test_energy_plot_with_bins(test_source):
 
 
 def test_energy_plot(test_source):
-    plot = test_source.plot_source_energy(n_samples=10)
+    plot = plot_source_energy(this=test_source, n_samples=10)
     assert isinstance(plot, go.Figure)
     assert len(plot.data[0]["x"]) == 1
 
 
 def test_energy_plot_axis(test_source):
-    plot = test_source.plot_source_energy(
-        n_samples=10, xaxis_type="log", yaxis_type="linear", xaxis_units="eV"
+    plot = plot_source_energy(
+        this=test_source,
+        n_samples=10,
+        xaxis_type="log",
+        yaxis_type="linear",
+        xaxis_units="eV"
     )
-    plot = test_source.plot_source_energy(
-        n_samples=10, xaxis_type="linear", yaxis_type="log", xaxis_units="MeV"
+    plot = plot_source_energy(
+        this=test_source, n_samples=10, xaxis_type="linear", yaxis_type="log", xaxis_units="MeV"
     )
     assert isinstance(plot, go.Figure)
     assert len(plot.data[0]["x"]) == 1
 
 
 def test_position_plot(test_source):
-    plot = test_source.plot_source_position(n_samples=10)
+    plot = plot_source_position(this=test_source, n_samples=10)
     assert isinstance(plot, go.Figure)
 
 
 def test_direction_plot(test_source):
-    plot = test_source.plot_source_direction(n_samples=10)
+    plot = plot_source_direction(this=test_source, n_samples=10)
     assert isinstance(plot, go.Figure)
 
 
 def test_energy_plot_with_figure(test_source):
     base_figure = go.Figure()
-    plot = test_source.plot_source_energy(figure=base_figure, n_samples=10)
+    plot = plot_source_energy(this=test_source, figure=base_figure, n_samples=10)
     assert isinstance(plot, go.Figure)
     assert len(plot.data[0]["x"]) == 1
 
 
 def test_position_plot_with_figure(test_source):
     base_figure = go.Figure()
-    plot = test_source.plot_source_position(figure=base_figure, n_samples=10)
+    plot = plot_source_position(this=test_source, figure=base_figure, n_samples=10)
     assert isinstance(plot, go.Figure)
 
 
 def test_direction_plot_with_figure(test_source):
     base_figure = go.Figure()
-    plot = test_source.plot_source_direction(figure=base_figure, n_samples=10)
+    plot = plot_source_direction(this=test_source, figure=base_figure, n_samples=10)
     assert isinstance(plot, go.Figure)

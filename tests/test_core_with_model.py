@@ -3,6 +3,7 @@ from openmc_source_plotter import (
     sample_initial_particles,
     plot_source_energy,
     plot_source_position,
+    plot_source_direction
 )
 import numpy as np
 import plotly.graph_objects as go
