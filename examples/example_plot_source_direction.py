@@ -1,5 +1,5 @@
 import openmc
-from openmc_source_plotter  import plot_source_direction
+from openmc_source_plotter import plot_source_direction
 
 # initializes a new source object
 my_source = openmc.IndependentSource()

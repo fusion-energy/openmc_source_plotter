@@ -1,5 +1,5 @@
 import openmc
-import openmc_source_plotter  import plot_source_position
+from openmc_source_plotter import plot_source_position
 
 # initialises a new source object
 my_source = openmc.Source()

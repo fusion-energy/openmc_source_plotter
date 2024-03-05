@@ -28,16 +28,13 @@ def sample_initial_particles(this, n_samples: int = 1000, prn_seed: int = None):
     Args:
         this: The openmc source, settings or model containing the source to plot
         n_samples: The number of source samples to obtain.
-        prn_seed: The pseudorandom number seed. 
+        prn_seed: The pseudorandom number seed.
     """
     with TemporaryDirectory() as tmpdir:
-
         if isinstance(this, openmc.Model):
-
             model = this
 
         else:
-
             model = openmc.Model()
 
             materials = openmc.Materials()
@@ -49,11 +46,9 @@ def sample_initial_particles(this, n_samples: int = 1000, prn_seed: int = None):
             model.geometry = geometry
 
             if isinstance(this, openmc.Settings):
-
                 model.settings = this
 
             else:  # source object
-
                 settings = openmc.Settings()
                 settings.particles = 1
                 settings.batches = 1

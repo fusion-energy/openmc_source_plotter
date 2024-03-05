@@ -1,5 +1,9 @@
 import openmc
-from openmc_source_plotter import sample_initial_particles, plot_source_energy, plot_source_position
+from openmc_source_plotter import (
+    sample_initial_particles,
+    plot_source_energy,
+    plot_source_position,
+)
 import numpy as np
 import plotly.graph_objects as go
 import pytest
