@@ -1,5 +1,5 @@
 import openmc
-import openmc_source_plotter  # overwrites the openmc.source method
+import openmc_source_plotter  import plot_source_position
 
 # initialises a new source object
 my_source = openmc.Source()
@@ -20,6 +20,6 @@ my_source.space = openmc.stats.CylindricalIndependent(
 )
 
 # plots the particle energy distribution
-plot = my_source.plot_source_position()
+plot = plot_source_position(my_source)
 
 plot.show()

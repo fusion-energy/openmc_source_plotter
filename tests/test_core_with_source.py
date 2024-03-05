@@ -1,5 +1,5 @@
 import openmc
-import openmc_source_plotter
+from openmc_source_plotter import sample_initial_particles, plot_source_energy, plot_source_position, plot_source_direction
 import numpy as np
 import plotly.graph_objects as go
 import pytest
@@ -8,7 +8,7 @@ import pytest
 @pytest.fixture
 def test_source():
     # initialises a new source object
-    my_source = openmc.Source()
+    my_source = openmc.IndependentSource()
 
     # sets the location of the source to x=0 y=0 z=0
     my_source.space = openmc.stats.Point((4.0, 5.0, 6.0))

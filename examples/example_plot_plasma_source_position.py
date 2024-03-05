@@ -1,10 +1,8 @@
-from openmc_plasma_source import TokamakSource
+from openmc_plasma_source import tokamak_source
+from openmc_source_plotter import plot_source_position
+import openmc
 
-# openmc_plasma_source makes use of this package and
-# TokamakSource is a SourceWithPlotting object so it has
-# access to the plotting methods
-
-my_sources = TokamakSource(
+my_sources = tokamak_source(
     elongation=1.557,
     ion_density_centre=1.09e20,
     ion_density_peaking_factor=1,
@@ -23,12 +21,13 @@ my_sources = TokamakSource(
     ion_temperature_beta=6,
     angles=(0, 3.14),  # makes a sector of 0 radians to 3.14 radians
     sample_size=100,  # reduces the number of samples from a default of 1000 to reduce plot time
-).make_openmc_sources()
+)
+
+settings = openmc.Settings()
+settings.Source = my_sources
 
 
 # plots the particle energy distribution
-plot = None
-for source in my_sources:
-    plot = source.plot_source_position(figure=plot)
+plot = plot_source_position(settings)
 
 plot.show()
