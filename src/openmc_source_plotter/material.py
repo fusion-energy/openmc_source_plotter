@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_gamma_emission(
-    self,
+    material,
     label_top: int = None,
 ):
     """makes a plot of the gamma energy spectra for a material. The
@@ -26,7 +26,7 @@ def plot_gamma_emission(
         possible_energies_to_label = []
         import lineid_plot
 
-        atoms = self.get_nuclide_atoms()
+        atoms = material.get_nuclide_atoms()
         for nuc, num_atoms in atoms.items():
             dists = []
             probs = []
@@ -47,7 +47,7 @@ def plot_gamma_emission(
 
         probs = []
         en = []
-        energy_dis = self.decay_photon_energy
+        energy_dis = material.get_decay_photon_energy(clip_tolerance=0.0)
         for p in energy_dis.p:
             probs.append(0)
             probs.append(p)
@@ -60,9 +60,9 @@ def plot_gamma_emission(
         # print(probs)
         lineid_plot.plot_line_ids(
             en,
-            # self.decay_photon_energy.x,
+            # material.decay_photon_energy.x,
             probs,
-            # self.decay_photon_energy.p,
+            # material.decay_photon_energy.p,
             energies_to_label,
             labels,
         )
@@ -70,7 +70,7 @@ def plot_gamma_emission(
     else:
         probs = []
         en = []
-        energy_dis = self.decay_photon_energy
+        energy_dis = material.get_decay_photon_energy(clip_tolerance=0.0)
         for p in energy_dis.p:
             probs.append(0)
             probs.append(p)
@@ -87,6 +87,3 @@ def plot_gamma_emission(
     plt.xlabel("Energy [eV]")
     plt.ylabel("Activity [Bq/s]")
     return plt
-
-
-openmc.Material.plot_gamma_emission = plot_gamma_emission
