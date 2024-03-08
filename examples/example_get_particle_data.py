@@ -1,5 +1,5 @@
 import openmc
-import openmc_source_plotter  # overwrites the openmc.source method
+from openmc_source_plotter import sample_initial_particles
 
 # initialises a new source object
 my_source = openmc.Source()
@@ -14,6 +14,9 @@ my_source.angle = openmc.stats.Isotropic()
 my_source.energy = openmc.stats.Discrete([14e6], [1])
 
 # gets the particle corrdiantes, energy and direction
-data = my_source.sample_initial_particles()
+particles = sample_initial_particles(my_source)
 
-print(data)
+print(particles)
+
+for particle in particles:
+    print(particle.E)

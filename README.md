@@ -68,7 +68,7 @@ A list of ```openmc.Particle``` objects can be obtained using ```model.sample_in
 
 ```python
 import openmc
-import openmc_source_plotter  # extents openmc.Model with sample_initial_particles method
+from openmc_source_plotter import sample_initial_particles
 
 settings = openmc.Settings()
 settings.particles = 1
@@ -83,7 +83,7 @@ geometry = openmc.Geometry([cell])
 
 model = openmc.Model(geometry, materials, settings)
 
-particles = model.sample_initial_particles(n_samples=10)
+particles = sample_initial_particles(this=model, n_samples=10)
 
 print(particles)
 >>>[<SourceParticle: neutron at E=1.440285e+07 eV>, <SourceParticle: neutron at E=1.397691e+07 eV>, <SourceParticle: neutron at E=1.393681e+07 eV>, <SourceParticle: neutron at E=1.470896e+07 eV>, <SourceParticle: neutron at E=1.460563e+07 eV>, <SourceParticle: neutron at E=1.420684e+07 eV>, <SourceParticle: neutron at E=1.413932e+07 eV>, <SourceParticle: neutron at E=1.412428e+07 eV>, <SourceParticle: neutron at E=1.464779e+07 eV>, <SourceParticle: neutron at E=1.391648e+07 eV>]

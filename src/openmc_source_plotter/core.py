@@ -22,16 +22,19 @@ if system_openmc_version < min_openmc_version:
     raise ImportError(msg)
 
 
-def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
+def sample_initial_particles(this, n_samples: int = 1000, prn_seed: int = None):
+    """smaples particles from the source.
 
+    Args:
+        this: The openmc source, settings or model containing the source to plot
+        n_samples: The number of source samples to obtain.
+        prn_seed: The pseudorandom number seed.
+    """
     with TemporaryDirectory() as tmpdir:
-
-        if isinstance(self, openmc.Model):
-
-            model = self
+        if isinstance(this, openmc.Model):
+            model = this
 
         else:
-
             model = openmc.Model()
 
             materials = openmc.Materials()
@@ -42,16 +45,14 @@ def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
             geometry = openmc.Geometry([cell])
             model.geometry = geometry
 
-            if isinstance(self, openmc.Settings):
-
-                model.settings = self
+            if isinstance(this, openmc.Settings):
+                model.settings = this
 
             else:  # source object
-
                 settings = openmc.Settings()
                 settings.particles = 1
                 settings.batches = 1
-                settings.source = self
+                settings.source = this
                 model.settings = settings
 
         model.export_to_model_xml()
@@ -66,7 +67,7 @@ def sample_initial_particles(self, n_samples: int = 1000, prn_seed: int = None):
 
 
 def plot_source_energy(
-    self,
+    this,
     figure: plotly.graph_objects.Figure = None,
     n_samples: int = 2000,
     prn_seed: int = 1,
@@ -79,6 +80,7 @@ def plot_source_energy(
     """makes a plot of the initial creation positions of an OpenMC source
 
     Args:
+        this: The openmc source, settings or model containing the source to plot
         figure: Optional base plotly figure to use for the plot. Passing in
             a pre made figure allows one to build up plots with from
             multiple sources. Defaults to None which makes a new figure for
@@ -110,7 +112,7 @@ def plot_source_energy(
             showlegend=True,
         )
 
-    data = self.sample_initial_particles(n_samples, prn_seed)
+    data = sample_initial_particles(this, n_samples, prn_seed)
 
     e_values = [particle.E for particle in data]
 
@@ -118,8 +120,8 @@ def plot_source_energy(
     probability, bin_edges = np.histogram(e_values, bins=energy_bins, density=True)
 
     # scaling by strength
-    if isinstance(self, openmc.SourceBase):
-        probability = probability * self.strength
+    if isinstance(this, openmc.SourceBase):
+        probability = probability * this.strength
     energy = bin_edges[:-1]
     if xaxis_units == "MeV":
         energy = energy / 1e6
@@ -138,7 +140,7 @@ def plot_source_energy(
 
 
 def plot_source_position(
-    self,
+    this: typing.Union[openmc.SourceBase, openmc.Settings, openmc.Model],
     figure=None,
     n_samples: int = 2000,
     prn_seed: int = 1,
@@ -146,6 +148,7 @@ def plot_source_position(
     """makes a plot of the initial creation positions of an OpenMC source(s)
 
     Args:
+        this: The openmc source, settings or model containing the source to plot
         figure: Optional base plotly figure to use for the plot. Passing in
             a pre made figure allows one to build up plots with from
             multiple sources. Defaults to None which makes a new figure for
@@ -163,7 +166,7 @@ def plot_source_position(
             showlegend=True,
         )
 
-    data = self.sample_initial_particles(n_samples, prn_seed)
+    data = sample_initial_particles(this, n_samples, prn_seed)
 
     text = ["Energy = " + str(particle.E) + " eV" for particle in data]
 
@@ -188,7 +191,7 @@ def plot_source_position(
 
 
 def plot_source_direction(
-    self,
+    this: typing.Union[openmc.SourceBase, openmc.Settings, openmc.Model],
     figure=None,
     n_samples: int = 2000,
     prn_seed: int = 1,
@@ -196,6 +199,7 @@ def plot_source_direction(
     """makes a plot of the initial creation positions of an OpenMC source(s)
 
     Args:
+        this: The openmc source, settings or model containing the source to plot
         figure: Optional base plotly figure to use for the plot. Passing in
             a pre made figure allows one to build up plots with from
             multiple sources. Defaults to None which makes a new figure for
@@ -209,7 +213,7 @@ def plot_source_direction(
     figure = plotly.graph_objects.Figure()
     figure.update_layout(title="Particle initial directions")
 
-    data = self.sample_initial_particles(n_samples, prn_seed)
+    data = sample_initial_particles(this, n_samples, prn_seed)
 
     biggest_coord = max(
         max([particle.r[0] for particle in data]),
@@ -253,30 +257,3 @@ def plot_source_direction(
     )
 
     return figure
-
-
-"""
-Extents the openmc.Source class to add source plotting
-methods for energy, direction and position. Source sampling methods are
-also provided for convenience. Additional methods are plot_source_energy(),
-plot_source_position(), plot_source_direction(), sample_initial_particles()
-"""
-openmc.SourceBase.sample_initial_particles = sample_initial_particles
-openmc.model.Model.sample_initial_particles = sample_initial_particles
-openmc.Model.sample_initial_particles = sample_initial_particles
-openmc.Settings.sample_initial_particles = sample_initial_particles
-
-openmc.SourceBase.plot_source_energy = plot_source_energy
-openmc.model.Model.plot_source_energy = plot_source_energy
-openmc.Model.plot_source_energy = plot_source_energy
-openmc.Settings.plot_source_energy = plot_source_energy
-
-openmc.SourceBase.plot_source_position = plot_source_position
-openmc.model.Model.plot_source_position = plot_source_position
-openmc.Model.plot_source_position = plot_source_position
-openmc.Settings.plot_source_position = plot_source_position
-
-openmc.SourceBase.plot_source_direction = plot_source_direction
-openmc.model.Model.plot_source_direction = plot_source_direction
-openmc.Model.plot_source_direction = plot_source_direction
-openmc.Settings.plot_source_direction = plot_source_direction
