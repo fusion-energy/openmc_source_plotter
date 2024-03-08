@@ -1,6 +1,9 @@
 import openmc
 from openmc_source_plotter import plot_gamma_emission
 
+# you will need to install optional dependancies for this example
+# pip install openmc_source_plotter[gammas]
+
 # this path will need changing to point to your chain file
 # openmc.config["chain_file"] = "chain-endf.xml"
 
