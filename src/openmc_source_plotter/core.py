@@ -173,7 +173,9 @@ def plot_source_position(
         )
     )
     title = "Particle production coordinates coloured by energy"
-    figure.update_layout(title=title)
+    # equal scaling on all three axes, otherwise plotly stretches each axis
+    # to the same length whatever its range
+    figure.update_layout(title=title, scene={"aspectmode": "data"})
 
     return figure
 

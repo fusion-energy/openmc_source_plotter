@@ -94,6 +94,12 @@ def test_position_plot_with_figure(test_source):
     base_figure = go.Figure()
     plot = plot_source_position(this=test_source, figure=base_figure, n_samples=10)
     assert isinstance(plot, go.Figure)
+    assert plot.layout.scene.aspectmode == "data"
+
+
+def test_position_plot_axes_scaled_equally(test_source):
+    plot = plot_source_position(this=test_source, n_samples=10)
+    assert plot.layout.scene.aspectmode == "data"
 
 
 def test_direction_plot_with_figure(test_source):
