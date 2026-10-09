@@ -18,7 +18,7 @@ def sample_initial_particles(this, n_samples: int = 1000, prn_seed: int = None):
         n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed.
     """
-    with TemporaryDirectory() as tmpdir:
+    with TemporaryDirectory():
         if isinstance(this, openmc.Model):
             model = this
 

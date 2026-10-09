@@ -20,7 +20,8 @@ my_sources = tokamak_source(
     triangularity=0.270,
     ion_temperature_beta=6,
     angles=(0, 3.14),  # makes a sector of 0 radians to 3.14 radians
-    sample_size=100,  # reduces the number of samples from a default of 1000 to reduce plot time
+    # reduces the number of samples from a default of 1000 to reduce plot time
+    sample_size=100,
 )
 
 settings = openmc.Settings()
