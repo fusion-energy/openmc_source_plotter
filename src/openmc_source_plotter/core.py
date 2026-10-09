@@ -18,7 +18,7 @@ def sample_initial_particles(this, n_samples: int = 1000, prn_seed: int = None):
         n_samples: The number of source samples to obtain.
         prn_seed: The pseudorandom number seed.
     """
-    with TemporaryDirectory() as tmpdir:
+    with TemporaryDirectory():
         if isinstance(this, openmc.Model):
             model = this
 
@@ -173,7 +173,9 @@ def plot_source_position(
         )
     )
     title = "Particle production coordinates coloured by energy"
-    figure.update_layout(title=title)
+    # equal scaling on all three axes, otherwise plotly stretches each axis
+    # to the same length whatever its range
+    figure.update_layout(title=title, scene={"aspectmode": "data"})
 
     return figure
 
